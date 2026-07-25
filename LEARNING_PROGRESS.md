@@ -1,5 +1,24 @@
 # Learning Progress
 
+## 2026-07-25 - Enum Move Exercise Formatting Cleanup
+
+### Demonstrated successfully
+- Cleaned the previous enum move exercise enough for `cargo fmt --check` to pass.
+- Kept the important ownership example: `handle(msg)` moves the `Message` enum into the function.
+- Correctly kept the second `handle(msg)` commented out because using `msg` again after the move would be a compiler error.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- A function parameter like `handle(message: Message)` takes ownership of the enum value.
+- If the enum's active variant contains owned data, such as `Text(String)`, moving the enum also moves that inner owned value.
+- To inspect or print an enum without consuming it, the next step is to borrow the enum with `&Message` and match by reference.
+
+### Review result
+Approved as clean. The exercise now demonstrates enum ownership movement and passes formatting, compiler, Clippy, and run checks.
+
+### Next concept
+Borrowing enum values in `match` instead of moving them.
+
 ## 2026-07-25 - Enum Text Variant Move Review
 
 ### Demonstrated successfully

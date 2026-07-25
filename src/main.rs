@@ -12,11 +12,14 @@ fn handle(message: Message) {
     }
 }
 fn main() {
-    handle(Message::Quit); // simple varient
-    handle(Message::Text("Lol".to_string())); //parameterized method varient
+    handle(Message::Quit); // unit varient
+    handle(Message::Text("Lol".to_string())); //tuple like varient
     handle(Message::Move {
         x: (1.2_f32),
         y: (0.2_f32),
     }); // struct varient   
-    // i dont mainly know about enum varients
+
+    let msg = Message::Text("Hello".to_string());
+    handle(msg); // here we move the enum to handle's parameter variable
+    // handle(msg); // and trying to access the moved value here so it will cause error
 }
