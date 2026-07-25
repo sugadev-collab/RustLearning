@@ -214,6 +214,8 @@ Questions can be answered naturally during lessons, one at a time.
 - Rust enum variants can carry data, and different variants can carry different data shapes, such as `Text(String)`, `Rgb(u8, u8, u8)`, or `Move { x: i32, y: i32 }`.
 - A warning like "variants are never constructed" means those variants are not used in the current program. It is not fixed by assigning explicit discriminant numbers such as `Red = 1`; construct/use the variants or intentionally allow the warning.
 - Rust `match` on an enum must be exhaustive so every possible valid enum value has defined behavior.
+- The `TrafficLight` cleanup used all variants (`Red`, `Yellow`, and `Green`), which removed the dead-code warning.
+- The first clean enum exercise used unit-like variants only. Next enum practice should introduce variants that carry data.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.

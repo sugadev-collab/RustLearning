@@ -1,5 +1,25 @@
 # Learning Progress
 
+## 2026-07-25 - TrafficLight Enum Warning Cleanup
+
+### Demonstrated successfully
+- Renamed the enum variant from `Yello` to `Yellow`.
+- Constructed and used all three variants: `Red`, `Yellow`, and `Green`.
+- Kept the `match` exhaustive by handling every `TrafficLight` variant.
+- Removed the previous dead-code warning for unused enum variants.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- Add short comments for key self-answers when asked, especially for concept checkpoints such as "Rust enum variants are values of the enum type, not plain integers."
+- Output text can be polished later, for example `Slow down` instead of `Slowdown`.
+- Rust enum variants without data are unit-like variants. Later, practice variants that carry data.
+
+### Review result
+Approved as clean. The first enum and exhaustive `match` exercise is now warning-free.
+
+### Next concept
+Enum variants that carry data.
+
 ## 2026-07-25 - TrafficLight Enum First Review
 
 ### Demonstrated successfully

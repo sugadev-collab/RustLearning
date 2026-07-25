@@ -1,37 +1,19 @@
-#[derive(Debug)]
-struct Counter {
-    value: i32,
+enum TrafficLight {
+    Red,
+    Yellow,
+    Green,
 }
 
-impl Counter {
-    fn new(value: i32) -> Self {
-        Self { value }
-    }
-
-    fn show(&self) {
-        print!("Counter: {:?}", self);
-    }
-
-    fn increment(&mut self) {
-        self.value += 1;
-    }
-
-    fn consume(self) {
-        println!("Your are deleting the : {:?} by calling this method", self);
+fn action(light: TrafficLight) {
+    match light {
+        // i am new to match but for your qustion i will use my brain and try to tell what i understand
+        TrafficLight::Red => println!("Stop"),
+        TrafficLight::Yellow => println!("Slowdown"),
+        TrafficLight::Green => println!("Go"),
     }
 }
-
 fn main() {
-    let mut counter = Counter::new(0);
-    println!("Ititial value: ");
-    counter.show();
-
-    counter.increment();
-    println!("After Increment: ");
-    counter.show();
-
-    counter.consume();
-
-    println!("Consumed....");
-    // counter.show(); the counter value moved so this is unavailable.
+    action(TrafficLight::Red);
+    action(TrafficLight::Yellow);
+    action(TrafficLight::Green);
 }
