@@ -84,6 +84,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Are Rust enum variants only integers, or can variants hold different data types?
 - Should unused Rust enum variants be fixed by assigning explicit values like `Red = 1`?
 - Why must Rust `match` handle every enum variant?
+- Is a struct-like enum variant such as `Message::Move { x: f32, y: f32 }` actually a struct?
 
 ### Struct defaults
 - Can I write a default field value inside a struct definition, such as `starting_sentence: &'static str = "Once upon a time"`?
@@ -216,6 +217,11 @@ Questions can be answered naturally during lessons, one at a time.
 - Rust `match` on an enum must be exhaustive so every possible valid enum value has defined behavior.
 - The `TrafficLight` cleanup used all variants (`Red`, `Yellow`, and `Green`), which removed the dead-code warning.
 - The first clean enum exercise used unit-like variants only. Next enum practice should introduce variants that carry data.
+- `Message::Text("Lol".to_string())` creates a fresh `Message` value each time. `Text` is a variant constructor that stores a `String` inside the enum value, not a single Java-style enum constant.
+- `Message::Quit` is unit-like and carries no data, so it feels more constant-like.
+- `Message::Move { x: f32, y: f32 }` is a struct-like variant: it has named fields like a struct, but it is still a variant inside the `Message` enum, not a separate named `struct Move`.
+- Matching `Message::Move { x, y }` destructures the named fields out of that variant.
+- Passing `Message` by value into `handle(message: Message)` moves the enum into the function. If the active variant owns data, such as `Text(String)`, that owned data moves too.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.

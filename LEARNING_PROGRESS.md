@@ -1,5 +1,27 @@
 # Learning Progress
 
+## 2026-07-25 - Message Enum Variants With Data Review
+
+### Demonstrated successfully
+- Created a `Message` enum with three variant shapes: `Quit`, `Text(String)`, and `Move { x: f32, y: f32 }`.
+- Constructed all three variants in `main`.
+- Wrote a `handle(message: Message)` function using exhaustive `match`.
+- Correctly matched `Message::Text(text)` and used the moved `String` inside the match arm.
+- Correctly matched the struct-like variant `Message::Move { x, y }` and destructured its named fields.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- `Message::Text("Lol".to_string())` creates a new `Message` value each time; `Text` acts like a variant constructor that stores a `String` inside the enum value.
+- `Move { x: f32, y: f32 }` is a struct-like enum variant. It is not a separate named struct type, but it stores named fields inside that variant.
+- A Rust enum value is exactly one variant at a time. Each variant can store no data, tuple-like unnamed data, or struct-like named data.
+- Since `handle(message: Message)` takes ownership, passing `Message::Text(String)` moves the enum and its inner `String` into the function.
+
+### Review result
+Approved as clean. The exercise correctly demonstrates enum variants that carry data and matching/destructuring those variants.
+
+### Next concept
+Ownership when matching enum variants that contain `String`.
+
 ## 2026-07-25 - TrafficLight Enum Warning Cleanup
 
 ### Demonstrated successfully
