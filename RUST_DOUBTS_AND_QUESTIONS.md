@@ -76,6 +76,8 @@ Questions can be answered naturally during lessons, one at a time.
 - What happens if the owner of data borrowed by `Preview<'a>` or `NameHolder<'a>` goes out of scope before the borrowed struct?
 - Is `impl<'a> Something<'a>` like Java method generics, and where exactly is that analogy useful vs misleading?
 - For stack values, is the owner and the owned instance/value basically the same local variable? How is this different from `Box<T>`, where the box owner is local but the boxed value is on the heap?
+- Why does Rust warn about `fn preview(&self) -> BorrowedBook` and suggest `BorrowedBook<'_>`?
+- How are Rust method receivers `self`, `&self`, and `&mut self` different from Java's `this`?
 
 ### Struct defaults
 - Can I write a default field value inside a struct definition, such as `starting_sentence: &'static str = "Once upon a time"`?
@@ -190,6 +192,9 @@ Questions can be answered naturally during lessons, one at a time.
 - A local `String` owner directly stores the `String` value, meaning pointer, length, and capacity. The string's UTF-8 bytes are in a heap buffer owned by that `String`. A `Box<T>` local owner stores a pointer-like box value, and the boxed `T` value lives in heap allocation owned by the box.
 - In the `OwnedBook` / `BorrowedBook<'a>` exercise, `sample_title` moved into `OwnedBook::new(sample_title)`, so `owned.title` became the owner of that `String`. `BorrowedBook::new(&owned.title)` then borrowed from the `OwnedBook` field, not from the old moved binding.
 - Owned structs are useful when the struct should control the lifetime of its data. Borrowed structs are useful as temporary views into data owned elsewhere, but then lifetimes must express that relationship.
+- In `OwnedBook::preview(&self) -> BorrowedBook`, the returned `BorrowedBook` borrows from `self.title`. Rust accepts the code but warns that hiding the lifetime in `BorrowedBook` is confusing.
+- Prefer `fn preview(&self) -> BorrowedBook<'_>` for this lesson. The `'_` lifetime placeholder makes it visible that the returned borrowed view is tied to the borrow of `self`.
+- Rust's `self` is only loosely like Java's `this`. In Rust, the method receiver controls ownership/borrowing: `self` takes ownership of the instance, `&self` immutably borrows it, and `&mut self` mutably borrows it.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.

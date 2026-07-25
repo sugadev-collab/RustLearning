@@ -1,5 +1,27 @@
 # Learning Progress
 
+## 2026-07-25 - OwnedBook Preview Method Review
+
+### Demonstrated successfully
+- Added an `OwnedBook::preview(&self)` method that creates a `BorrowedBook` view from `self.title`.
+- Correctly used `BorrowedBook::new(&self.title)` inside the method, so the borrowed view points into data owned by `self`.
+- Created an `OwnedBook`, called `owned.preview()`, and printed the borrowed title.
+- Correctly connected `&self` with the idea that a method can borrow the current instance, similar in spirit to Java's `this`, but checked by Rust's borrow rules.
+- `cargo fmt --check` completed successfully.
+- `cargo check`, `cargo clippy`, and `cargo run` completed successfully but reported one lifetime-syntax warning.
+
+### Still practicing
+- The return type `BorrowedBook` hides the lifetime parameter even though the returned value borrows from `&self`.
+- Rust warns that `fn preview(&self) -> BorrowedBook` is confusing because the lifetime is elided on `&self` and hidden on `BorrowedBook`.
+- Prefer writing `fn preview(&self) -> BorrowedBook<'_>` here. The `'_` says: "this returned `BorrowedBook` borrows for some lifetime inferred from the input borrow."
+- The Java `this` analogy helps for "current instance", but Rust's `self` can be owned, immutably borrowed, or mutably borrowed depending on whether the method takes `self`, `&self`, or `&mut self`.
+
+### Review result
+Functionally correct, but not fully approved yet because the code has one warning. The next step is to make the returned borrowed type explicit with `BorrowedBook<'_>`.
+
+### Next concept
+Method receiver forms: `self`, `&self`, and `&mut self`.
+
 ## 2026-07-25 - OwnedBook vs BorrowedBook Review
 
 ### Demonstrated successfully
