@@ -188,6 +188,8 @@ Questions can be answered naturally during lessons, one at a time.
 - In the helper-block version of `BookPreview<'a>`, the preview variable's lexical scope really does end at the closing brace. That makes the borrow end easy to see before moving `book_title`.
 - A local variable like `preview` owns its `BookPreview` value directly. Because `BookPreview` contains `&str` fields, it owns the reference values but only borrows the string bytes owned by `book_title` and `book_author`.
 - A local `String` owner directly stores the `String` value, meaning pointer, length, and capacity. The string's UTF-8 bytes are in a heap buffer owned by that `String`. A `Box<T>` local owner stores a pointer-like box value, and the boxed `T` value lives in heap allocation owned by the box.
+- In the `OwnedBook` / `BorrowedBook<'a>` exercise, `sample_title` moved into `OwnedBook::new(sample_title)`, so `owned.title` became the owner of that `String`. `BorrowedBook::new(&owned.title)` then borrowed from the `OwnedBook` field, not from the old moved binding.
+- Owned structs are useful when the struct should control the lifetime of its data. Borrowed structs are useful as temporary views into data owned elsewhere, but then lifetimes must express that relationship.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
@@ -213,7 +215,8 @@ Questions can be answered naturally during lessons, one at a time.
 - The learner may clean comments and experiment code after a review is approved.
 - Important questions should be saved here before cleanup so future chats can continue smoothly.
 - Important learning/project files may be staged and committed to Git when useful so future chats can recover the learning history from the repository. Do not commit generated build artifacts.
-- Current rough progress estimate as of the borrowed-struct helper-block exercise: about 25-30% toward intermediate Rust. Strong beginner fundamentals are forming, especially around ownership and borrowing, but intermediate Rust still requires traits, enums, pattern matching, `Option`/`Result`, modules, collections, iterators, generics, tests, and larger project structure.
+- Current rough progress estimate for overall intermediate Rust breadth: about 25-30%. For ownership/borrowing/string memory model depth specifically, estimate about 45-55%. Strong beginner fundamentals are forming, especially around ownership and borrowing, but intermediate Rust still requires traits, enums, pattern matching, `Option`/`Result`, modules, collections, iterators, generics, tests, and larger project structure.
+- The learner values understanding how things work internally, not only learning surface syntax. Keep teaching Java-like features such as enums, traits, collections, and iterators through Rust's ownership, borrowing, allocation, and drop model.
 - Current cleaned code baseline was approved after `cargo check`, `cargo clippy`, and `cargo run` passed.
 - A later `Human` exercise transferred the `derive(Debug)` idea, but had unused-field warnings and formatting differences.
 - The `Human` exercise was then cleaned so all fields were read directly and `cargo fmt --check` passed.

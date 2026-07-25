@@ -1,5 +1,32 @@
 # Learning Progress
 
+## 2026-07-25 - OwnedBook vs BorrowedBook Review
+
+### Demonstrated successfully
+- Created `OwnedBook` with an owned `String` field.
+- Created `BorrowedBook<'a>` with a borrowed `&'a str` field.
+- Implemented beginner-friendly `new` associated functions for both structs.
+- Moved `sample_title` into `OwnedBook::new(sample_title)`, correctly transferring ownership into `owned.title`.
+- Created `BorrowedBook` by borrowing from `&owned.title`, showing that a borrowed struct can borrow from another owned struct's field.
+- Printed the borrowed title directly.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- After `let owned = OwnedBook::new(sample_title);`, the original `sample_title` binding is no longer usable because its `String` moved into `owned.title`.
+- `BorrowedBook::new(&owned.title)` borrows text owned by the `OwnedBook`, not by the old moved `sample_title` binding.
+- When comparing progress, separate Rust surface syntax breadth from Rust memory/ownership depth. The learner is further along in ownership/borrowing depth than in total intermediate Rust breadth.
+
+### Review result
+Approved as clean. This exercise correctly demonstrates owned struct fields versus borrowed struct fields, including borrowing from an owned field after a move.
+
+### Progress estimate clarification
+- Overall intermediate Rust breadth: roughly 25-30%.
+- Ownership/borrowing/string memory model depth: roughly 45-55% of the way toward the level expected of an intermediate learner.
+- The next large growth area is not just learning Java-like constructs such as loops, enums, traits, and collections, but learning how Rust's ownership, borrowing, pattern matching, error handling, and iterators change how those constructs are designed.
+
+### Next concept
+Owned structs that create borrowed views with methods.
+
 ## 2026-07-25 - Borrowed Struct Helper Block Review
 
 ### Demonstrated successfully
