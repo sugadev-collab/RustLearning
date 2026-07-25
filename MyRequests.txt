@@ -1,0 +1,9 @@
+
+Review the Rust code I wrote.
+
+Do not edit it yet. Run cargo check and cargo clippy. Identify the most
+important problems, explain the Rust concepts behind them, and give me
+hints so I can fix them myself.
+
+After the review, update LEARNING_PROGRESS.md and recommend one next
+concept for me to learn.
