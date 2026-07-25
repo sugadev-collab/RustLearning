@@ -13,24 +13,24 @@ Use the larger `LEARNING_PROGRESS.md` and `RUST_DOUBTS_AND_QUESTIONS.md` only fo
 
 ## Latest Approved Exercise
 
-- Added tuple-like enum variant `Resize(u32, u32)`.
-- Kept `handle(message: &Message)` exhaustive and matched `Message::Resize(height, width)`.
-- Created one owned `Message::Resize(800, 600)` value and called `handle(&resize)` twice.
-- This proved the same enum value can be inspected repeatedly through shared borrowing.
+- Created `find_message(id: u32) -> Option<Message>`.
+- Used `match id` to return `Some(Message::...)` for ids `0`, `1`, `2`, and `3`, and `None` for all other ids.
+- In `main`, looped over `0..5_u32` and matched each `Option<Message>`, exercising both `Some(m)` and `None`.
+- Used direct `Some(...)` and `None` instead of `Option::Some(...)` and `Option::None`.
 - `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` passed.
 
 ## Current Weak Spots
 
 - Match ergonomics with borrowed enum data is improving, but should be revisited later with `Option<T>` and `Result<T, E>`.
-- Tuple-like enum variant field order matters; names like `height` and `width` are created by the pattern, not stored as field names.
-- The next step is learning how Rust represents "maybe a value" without `null`.
+- `Option<T>` is improving: the learner can now return and match both `Some(...)` and `None`.
+- The wildcard pattern `_` in `match` is a current question.
+- Expression style and `match` readability are improving, but should be reinforced through small exercises.
 
 ## Current Next Concept
 
-`Option<T>` as Rust's safe replacement for nullable values.
+Wildcard patterns with `_` and match exhaustiveness.
 
 ## Next Small Exercise
 
-Create a function `find_message(id: u32) -> Option<Message>`.
-Return `Some(Message::Text(...))` for one id and `None` for another.
-In `main`, call the function twice and use `match` to handle both `Some(message)` and `None`.
+Create a `describe_number(n: u32)` function using `match`.
+Handle `0`, `1`, `2`, and `_`; print a different message for each arm.

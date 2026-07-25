@@ -1,5 +1,46 @@
 # Learning Progress
 
+## 2026-07-25 - Option Message Lookup Approved
+
+### Demonstrated successfully
+- Created `find_message(id: u32) -> Option<Message>`.
+- Used `match id` to return different message variants for specific ids.
+- Used `_ => None` as a fallback arm for all other ids.
+- In `main`, looped over `0..5_u32` and matched the returned `Option<Message>`.
+- Exercised both `Some(m)` and `None` branches at runtime.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully.
+
+### Still practicing
+- Understanding that `_` is a wildcard pattern meaning "match anything here, but do not bind it to a variable."
+- Recognizing why `match` must be exhaustive.
+- Using fallback match arms intentionally instead of as mystery syntax.
+
+### Review result
+Approved as clean. The exercise correctly demonstrates `Option<T>` as Rust's safe replacement for nullable results.
+
+### Next concept
+Wildcard patterns with `_` and match exhaustiveness.
+
+## 2026-07-25 - Option Message Lookup Review
+
+### Demonstrated successfully
+- Created `find_message(id: u32) -> Option<Message>`.
+- Returned different `Some(Message::...)` variants for several ids.
+- Returned `None` for ids outside the accepted range.
+- Used `match` on the result of `find_message`.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully.
+
+### Still practicing
+- The caller should exercise both branches of `Option`: one `Some(...)` case and one `None` case.
+- `Some(...)` and `None` are normally written directly instead of `Option::Some(...)` and `Option::None`, though both forms are valid.
+- A `match id { ... }` expression can be clearer than a long `if/else if` chain when matching exact values.
+
+### Review result
+Close, but not fully approved yet. The function is correct for this lesson, but `main` currently calls only one id that returns `Some(...)`, so the `None` branch is not practiced.
+
+### Next concept
+Calling and matching multiple `Option<T>` results, including both `Some` and `None`.
+
 ## 2026-07-25 - Resize Variant Borrowed Match Review
 
 ### Demonstrated successfully

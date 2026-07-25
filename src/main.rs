@@ -13,19 +13,21 @@ fn handle(message: &Message) {
         Message::Resize(height, width) => println!("Height: {}, width: {}", height, width),
     }
 }
+
+fn find_message(id: u32) -> Option<Message> {
+    match id {
+        0 => Some(Message::Quit),
+        1 => Some(Message::Text("Accepted".to_string())),
+        2 => Some(Message::Move { x: 3_f32, y: 3_f32 }),
+        3 => Some(Message::Resize(3_u32, 3_u32)),
+        _ => None, // i need to know what is this _
+    }
+}
 fn main() {
-    handle(&Message::Quit);
-    handle(&Message::Text("Lol".to_string()));
-    handle(&Message::Move {
-        x: (1.2_f32),
-        y: (0.2_f32),
-    });
-
-    let msg = Message::Text("Hello".to_string());
-    handle(&msg);
-    handle(&msg); // now this is usable
-    let resize = Message::Resize(800_u32, 600_u32);
-
-    handle(&resize);
-    handle(&resize);
+    for i in 0..5_u32 {
+        match find_message(i) {
+            Some(m) => handle(&m),
+            None => println!("Nothing accepted."),
+        };
+    }
 }
