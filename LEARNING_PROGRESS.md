@@ -1,5 +1,25 @@
 # Learning Progress
 
+## 2026-07-25 - Borrowed Enum Match Exercise
+
+### Demonstrated successfully
+- Changed `handle(message: Message)` to `handle(message: &Message)`, so the function borrows the enum instead of taking ownership.
+- Updated calls to pass references such as `handle(&msg)`.
+- Called `handle(&msg)` twice on the same `Message::Text(String)` value, proving that borrowing lets the caller keep ownership.
+- Kept the `match` exhaustive for `Quit`, `Text(String)`, and `Move { x, y }`.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- When matching on `&Message`, Rust's match ergonomics let patterns like `Message::Text(text)` work without manually writing `&Message::Text(...)`.
+- In that borrowed match, `text` is borrowed from inside the enum; it is not moved out of `msg`.
+- This concept is correct but should be revisited later because it is one of the bridges between pattern matching, borrowing, and lifetimes.
+
+### Review result
+Approved as clean. The exercise correctly demonstrates borrowing an enum so the same value can be inspected more than once.
+
+### Next concept
+Match ergonomics with borrowed enum data.
+
 ## 2026-07-25 - Enum Move Exercise Formatting Cleanup
 
 ### Demonstrated successfully

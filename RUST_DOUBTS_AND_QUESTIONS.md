@@ -227,6 +227,8 @@ Questions can be answered naturally during lessons, one at a time.
 - The quantum-particle analogy is useful only loosely: an enum value is already exactly one definite variant, not random. `match` reveals/checks/destructures the active variant and handles it.
 - `match` does not turn the enum into a variant; it branches based on the variant already stored in the enum value.
 - The enum move exercise is now formatting-clean. Next practice should show how `handle(&msg)` can borrow an enum so the same value can be inspected more than once.
+- The borrowed enum exercise used `fn handle(message: &Message)` and called `handle(&msg)` twice successfully. This shows the enum stays owned by the caller while the function only borrows it.
+- In `match message` where `message: &Message`, patterns such as `Message::Text(text)` work because of Rust match ergonomics. The inner `text` is borrowed, not moved out of the enum.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
