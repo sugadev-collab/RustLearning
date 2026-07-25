@@ -7,8 +7,8 @@ enum Message {
 fn handle(message: &Message) {
     match message {
         Message::Quit => println!("Exiting...."),
-        Message::Text(text) => println!("Your text: {}", text),
-        Message::Move { x, y } => println!("Moving to position X : {}, Y: {}", x, y),
+        Message::Text(text) => println!("Your text: {}", text), // i sow that i get the string borrow here
+        Message::Move { x, y } => println!("Moving to position X : {}, Y: {}", x, y), // and also float borrow here
     }
 }
 fn main() {
