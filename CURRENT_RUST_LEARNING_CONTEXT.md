@@ -13,28 +13,24 @@ Use the larger `LEARNING_PROGRESS.md` and `RUST_DOUBTS_AND_QUESTIONS.md` only fo
 
 ## Latest Approved Exercise
 
-- Borrowed enum match exercise using `fn handle(message: &Message)`.
-- `handle(&msg)` can be called twice because the caller keeps ownership of the enum.
-- Matching on `&Message` borrowed the inner data instead of moving it out.
+- Added tuple-like enum variant `Resize(u32, u32)`.
+- Kept `handle(message: &Message)` exhaustive and matched `Message::Resize(height, width)`.
+- Created one owned `Message::Resize(800, 600)` value and called `handle(&resize)` twice.
+- This proved the same enum value can be inspected repeatedly through shared borrowing.
 - `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` passed.
 
 ## Current Weak Spots
 
-- Match ergonomics with borrowed enum data should be practiced more.
-- In `match message` where `message: &Message`, patterns like `Message::Text(text)` work because Rust automatically handles reference patterns in common cases.
-- The inner binding such as `text` is borrowed from the enum; it is not an owned `String`.
+- Match ergonomics with borrowed enum data is improving, but should be revisited later with `Option<T>` and `Result<T, E>`.
+- Tuple-like enum variant field order matters; names like `height` and `width` are created by the pattern, not stored as field names.
+- The next step is learning how Rust represents "maybe a value" without `null`.
 
 ## Current Next Concept
 
-Match ergonomics with borrowed enum data.
+`Option<T>` as Rust's safe replacement for nullable values.
 
 ## Next Small Exercise
 
-Add another enum variant:
-
-```rust
-Resize(u32, u32)
-```
-
-Then update `handle(&Message)` to match it and print width/height.
-Create one `let msg = Message::Resize(800, 600);` and call `handle(&msg)` twice.
+Create a function `find_message(id: u32) -> Option<Message>`.
+Return `Some(Message::Text(...))` for one id and `None` for another.
+In `main`, call the function twice and use `match` to handle both `Some(message)` and `None`.

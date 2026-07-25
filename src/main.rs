@@ -2,13 +2,15 @@ enum Message {
     Quit,
     Text(String),
     Move { x: f32, y: f32 },
+    Resize(u32, u32),
 }
 
 fn handle(message: &Message) {
     match message {
         Message::Quit => println!("Exiting...."),
-        Message::Text(text) => println!("Your text: {}", text), // i sow that i get the string borrow here
-        Message::Move { x, y } => println!("Moving to position X : {}, Y: {}", x, y), // and also float borrow here
+        Message::Text(text) => println!("Your text: {}", text),
+        Message::Move { x, y } => println!("Moving to position X : {}, Y: {}", x, y),
+        Message::Resize(height, width) => println!("Height: {}, width: {}", height, width),
     }
 }
 fn main() {
@@ -22,4 +24,8 @@ fn main() {
     let msg = Message::Text("Hello".to_string());
     handle(&msg);
     handle(&msg); // now this is usable
+    let resize = Message::Resize(800_u32, 600_u32);
+
+    handle(&resize);
+    handle(&resize);
 }

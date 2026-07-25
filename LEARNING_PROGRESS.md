@@ -1,5 +1,25 @@
 # Learning Progress
 
+## 2026-07-25 - Resize Variant Borrowed Match Review
+
+### Demonstrated successfully
+- Added a tuple-like enum variant `Resize(u32, u32)` to `Message`.
+- Updated `handle(message: &Message)` so the `match` remains exhaustive.
+- Matched `Message::Resize(height, width)` while borrowing through `&Message`.
+- Created one owned `Message::Resize(800, 600)` value and called `handle(&resize)` twice, proving the same enum value can be inspected repeatedly through shared borrowing.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- Match ergonomics: when matching a `&Message`, Rust lets patterns like `Message::Resize(height, width)` work without writing explicit reference patterns.
+- The bindings from a borrowed match are borrowed values, not owned data moved out of the enum.
+- Tuple-like enum variant field order matters; names like `height` and `width` are chosen by the match pattern, not stored field names.
+
+### Review result
+Approved as clean. The exercise correctly demonstrates adding a borrowed tuple-like enum variant and reusing the same enum value through shared references.
+
+### Next concept
+`Option<T>` as Rust's safe replacement for nullable values.
+
 ## 2026-07-25 - Borrowed Enum Match Exercise
 
 ### Demonstrated successfully
