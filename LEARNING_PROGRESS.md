@@ -1,5 +1,25 @@
 # Learning Progress
 
+## 2026-07-25 - Enum Text Variant Move Review
+
+### Demonstrated successfully
+- Created a `Message::Text("Hello".to_string())` value and stored it in `msg`.
+- Passed `msg` into `handle(msg)`, correctly moving the enum value into the function parameter.
+- Commented out a second attempted use of `msg` and correctly explained that it would fail because `msg` was moved.
+- Correctly connected that when the active enum variant is `Text(String)`, moving the enum also moves the inner owned `String`.
+- `cargo check`, `cargo clippy`, and `cargo run` completed successfully.
+
+### Still practicing
+- `cargo fmt --check` failed only because of whitespace/trailing spaces in `src/main.rs`.
+- A Rust enum value is not quantum-random: it is already one definite variant. The useful part of the analogy is that when matched, you handle the enum according to the active variant it currently has.
+- `match` does not change which variant the enum is; it checks/destructures the variant and gives access to any data inside that variant.
+
+### Review result
+Conceptually approved, but not fully clean yet because formatting needs one small cleanup.
+
+### Next concept
+Borrowing enum values in `match` instead of moving them.
+
 ## 2026-07-25 - Message Enum Variants With Data Review
 
 ### Demonstrated successfully

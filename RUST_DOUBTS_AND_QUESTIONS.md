@@ -85,6 +85,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Should unused Rust enum variants be fixed by assigning explicit values like `Red = 1`?
 - Why must Rust `match` handle every enum variant?
 - Is a struct-like enum variant such as `Message::Move { x: f32, y: f32 }` actually a struct?
+- Is it fair to think of a Rust enum like a "quantum particle" where using/matching it reveals which variant it is?
 
 ### Struct defaults
 - Can I write a default field value inside a struct definition, such as `starting_sentence: &'static str = "Once upon a time"`?
@@ -222,6 +223,9 @@ Questions can be answered naturally during lessons, one at a time.
 - `Message::Move { x: f32, y: f32 }` is a struct-like variant: it has named fields like a struct, but it is still a variant inside the `Message` enum, not a separate named `struct Move`.
 - Matching `Message::Move { x, y }` destructures the named fields out of that variant.
 - Passing `Message` by value into `handle(message: Message)` moves the enum into the function. If the active variant owns data, such as `Text(String)`, that owned data moves too.
+- In the `Message::Text("Hello".to_string())` move exercise, `handle(msg)` moved the whole enum value into the function. A second `handle(msg)` would fail because `msg` was already moved.
+- The quantum-particle analogy is useful only loosely: an enum value is already exactly one definite variant, not random. `match` reveals/checks/destructures the active variant and handles it.
+- `match` does not turn the enum into a variant; it branches based on the variant already stored in the enum value.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
