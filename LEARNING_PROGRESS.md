@@ -1,5 +1,27 @@
 # Learning Progress
 
+## 2026-07-25 - BookPreview Struct Lifetime Small Exercise
+
+### Demonstrated successfully
+- Created `BookPreview<'a>` with borrowed fields `title: &'a str` and `author: &'a str`.
+- Implemented `impl<'a> BookPreview<'a>` and used an associated `new` function with `&'a str` parameters.
+- Created owned `String` values for `book_title` and `book_author`.
+- Built a preview by borrowing from both owned strings.
+- Printed the preview fields directly, so there were no unread-field warnings.
+- Moved `book_title` after the preview's last use and correctly connected this to Rust ending the borrow after its last actual use.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- Use the term "non-lexical lifetime" for this behavior: the borrow can end after the last use, before the end of the surrounding `{ }` scope.
+- The preview value is not necessarily dropped immediately after the last print. More precisely, the borrow of `book_title` through `preview.title` is no longer active because `preview.title` is not used again.
+- If `preview.title` were used after moving `book_title`, Rust would reject the move of `book_title` because the stored reference would still need to remain valid.
+
+### Review result
+Approved as clean. The code correctly demonstrates a lifetime-parameterized struct borrowing from owned `String` values and then moving an owner only after the relevant borrow's last use.
+
+### Next concept
+Borrowed structs and explicit helper scopes.
+
 ## 2026-07-25 - Struct Lifetime Annotation Review After Big Exercise
 
 ### Demonstrated successfully

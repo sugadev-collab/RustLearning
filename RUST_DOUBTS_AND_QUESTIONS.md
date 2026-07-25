@@ -182,6 +182,8 @@ Questions can be answered naturally during lessons, one at a time.
 - `impl<'a> Preview<'a>` means "declare the lifetime parameter `'a` for this impl block, then use it with `Preview<'a>` and method arguments/returns." This is syntactically similar to declaring a generic parameter, but `'a` is a lifetime relationship, not a runtime object or Java type parameter.
 - A borrow stored in a struct remains active at least until the struct's last use. If the struct might be used later, Rust treats the borrow as still active; after its last use, non-lexical lifetimes can allow later mutation or moves of the owner.
 - If an owner would be dropped or moved while a borrowed struct can still use a reference into it, Rust rejects the code at the owner move/drop point so the borrowed struct can never dangle.
+- In the `BookPreview<'a>` exercise, moving `book_title` after printing the preview is allowed because the borrow through `preview.title` has reached its last use. This is non-lexical lifetime behavior, not a "lexical lifetime" ending at the block boundary.
+- It is slightly misleading to say the preview instance is dropped immediately after its last use. The safer wording is: Rust can end the active borrow after the last use of the reference, even though the variable's lexical scope may continue.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
