@@ -1,5 +1,26 @@
 # Learning Progress
 
+## 2026-07-25 - Preview Method Lifetime Fix And Receiver Explanation
+
+### Demonstrated successfully
+- Fixed `OwnedBook::preview` by changing the return type from `BorrowedBook` to `BorrowedBook<'_>`.
+- Kept the method borrowing from `&self.title`, so the returned `BorrowedBook` view is tied to the borrow of `self`.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+- Correctly explained that a method receiver written as `self` takes ownership of the instance.
+- Correctly explained that `&self` borrows the instance without taking ownership.
+- Correctly explained that `&mut self` lets the method change the instance through a mutable borrow while ownership remains with the caller after the borrow ends.
+
+### Still practicing
+- If a method takes `self`, the value is moved into the method. It is dropped at the end of the method only if the method does not return it or move it somewhere else.
+- If a method takes `&mut self`, the method gets temporary exclusive access. The caller cannot use the owner during that borrow, but can use it again after the method call ends.
+- The phrase "owner is safe" is good intuition, but the precise Rust wording is: ownership does not move; only a borrow is created temporarily.
+
+### Review result
+Approved as clean. The method-based borrowed view is now warning-free, and the receiver explanation is correct with minor precision improvements.
+
+### Next concept
+Method receiver forms: `self`, `&self`, and `&mut self`.
+
 ## 2026-07-25 - OwnedBook Preview Method Review
 
 ### Demonstrated successfully

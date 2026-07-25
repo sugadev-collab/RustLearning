@@ -195,6 +195,9 @@ Questions can be answered naturally during lessons, one at a time.
 - In `OwnedBook::preview(&self) -> BorrowedBook`, the returned `BorrowedBook` borrows from `self.title`. Rust accepts the code but warns that hiding the lifetime in `BorrowedBook` is confusing.
 - Prefer `fn preview(&self) -> BorrowedBook<'_>` for this lesson. The `'_` lifetime placeholder makes it visible that the returned borrowed view is tied to the borrow of `self`.
 - Rust's `self` is only loosely like Java's `this`. In Rust, the method receiver controls ownership/borrowing: `self` takes ownership of the instance, `&self` immutably borrows it, and `&mut self` mutably borrows it.
+- If a method takes `self`, ownership of the instance moves into the method. The value is dropped at the end of the method unless the method returns it or moves it somewhere else.
+- If a method takes `&self`, the method temporarily reads/uses the instance without taking ownership.
+- If a method takes `&mut self`, the method temporarily gets exclusive mutable access to the instance. The caller keeps ownership and can use the value again after the mutable borrow ends.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
