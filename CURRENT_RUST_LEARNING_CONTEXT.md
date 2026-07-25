@@ -7,6 +7,8 @@ Use the larger `LEARNING_PROGRESS.md` and `RUST_DOUBTS_AND_QUESTIONS.md` only fo
 
 - Keep token usage low by reading only the compact context first.
 - Avoid dumping the full large progress/doubts files into chat.
+- If this file grows too large, archive older detail into a dated `RUST_CONTEXT_ARCHIVE_YYYY_MM_DD.md` file and rewrite this file to the small current state.
+- Do not read archive files by default; use them only for targeted lookup.
 - Git commits are allowed when useful, but keep them small and do not stage generated build artifacts.
 
 ## Latest Approved Exercise
