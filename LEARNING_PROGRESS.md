@@ -1,5 +1,28 @@
 # Learning Progress
 
+## 2026-07-25 - Counter Method Receiver Forms Review
+
+### Demonstrated successfully
+- Created a `Counter` struct with an owned `i32` field.
+- Added a `new` associated function returning `Self`.
+- Added `show(&self)`, which reads the counter without taking ownership.
+- Added `increment(&mut self)`, which mutates the counter through a temporary exclusive mutable borrow.
+- Added `consume(self)`, which takes ownership of the counter.
+- Created a mutable `Counter`, called `show`, then `increment`, then `show` again, then `consume`.
+- Correctly commented that `counter` cannot be used after `consume()` because the value moved into the method.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- `consume(self)` does not manually "delete" the value in the C++ sense. It takes ownership; then the value is dropped automatically at the end of the method if not returned or moved elsewhere.
+- `print!` does not add a newline, so output can run together. Use `println!` when each message should be on its own line.
+- For methods, choose the receiver by intent: `&self` to read, `&mut self` to mutate while keeping ownership with the caller, and `self` to consume/take ownership.
+
+### Review result
+Approved as clean. The exercise correctly demonstrates all three common method receiver forms.
+
+### Next concept
+Enums and pattern matching with `match`.
+
 ## 2026-07-25 - Preview Method Lifetime Fix And Receiver Explanation
 
 ### Demonstrated successfully

@@ -198,6 +198,9 @@ Questions can be answered naturally during lessons, one at a time.
 - If a method takes `self`, ownership of the instance moves into the method. The value is dropped at the end of the method unless the method returns it or moves it somewhere else.
 - If a method takes `&self`, the method temporarily reads/uses the instance without taking ownership.
 - If a method takes `&mut self`, the method temporarily gets exclusive mutable access to the instance. The caller keeps ownership and can use the value again after the mutable borrow ends.
+- The `Counter` receiver exercise showed all three forms cleanly: `show(&self)` reads, `increment(&mut self)` mutates, and `consume(self)` takes ownership.
+- Prefer saying `consume(self)` "takes ownership and then the value is dropped at the end if not returned" rather than saying it manually deletes the value.
+- Use `println!` instead of `print!` when output should clearly appear on separate lines.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.

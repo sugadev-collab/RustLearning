@@ -1,31 +1,37 @@
-struct OwnedBook {
-    title: String,
+#[derive(Debug)]
+struct Counter {
+    value: i32,
 }
 
-impl OwnedBook {
-    fn new(title: String) -> Self {
-        Self { title }
+impl Counter {
+    fn new(value: i32) -> Self {
+        Self { value }
     }
 
-    fn preview(&self) -> BorrowedBook<'_> {
-        BorrowedBook::new(&self.title)
+    fn show(&self) {
+        print!("Counter: {:?}", self);
     }
-}
 
-struct BorrowedBook<'a> {
-    title: &'a str,
-}
+    fn increment(&mut self) {
+        self.value += 1;
+    }
 
-impl<'a> BorrowedBook<'a> {
-    fn new(title: &'a str) -> Self {
-        Self { title }
+    fn consume(self) {
+        println!("Your are deleting the : {:?} by calling this method", self);
     }
 }
 
 fn main() {
-    let sample_title = "Harry Spotter 8".to_string();
-    let owned = OwnedBook::new(sample_title);
+    let mut counter = Counter::new(0);
+    println!("Ititial value: ");
+    counter.show();
 
-    let borrowed = owned.preview(); // the preview borrows from self so we dont need to explicitly pass the owned object's reference, insted for easy we pass the instence's self reference to create the preview, and its like java this pointer
-    println!("Borrowed: {}", borrowed.title);
+    counter.increment();
+    println!("After Increment: ");
+    counter.show();
+
+    counter.consume();
+
+    println!("Consumed....");
+    // counter.show(); the counter value moved so this is unavailable.
 }
