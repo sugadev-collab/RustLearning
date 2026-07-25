@@ -1,5 +1,28 @@
 # Learning Progress
 
+## 2026-07-25 - TrafficLight Enum First Review
+
+### Demonstrated successfully
+- Created a `TrafficLight` enum with unit-like variants.
+- Wrote an `action(light: TrafficLight)` function using `match`.
+- Handled all enum variants in the `match`, so the match expression is exhaustive.
+- Called `action(TrafficLight::Red)` and got the expected output.
+- Correctly reasoned that `match` should handle every variant so a valid enum value cannot be ignored or lead to missing behavior.
+- `cargo fmt --check` completed successfully.
+- `cargo check`, `cargo clippy`, and `cargo run` completed successfully but reported a warning because some variants were intentionally not constructed.
+
+### Still practicing
+- The warning for `Yello` and `Green` means those variants are never used/constructed in the current program. It is not solved by assigning numbers such as `Red = 1`.
+- Rust enums are not just integers like C/C++ enums and not Java enum singleton objects/classes. A Rust enum is a tagged union / sum type: a value is exactly one variant at a time.
+- Fieldless/unit-like variants such as `TrafficLight::Red` are simple named variants. Rust can represent them compactly, often like a small integer internally, but the type system treats them as `TrafficLight`, not plain integers.
+- Rust enum variants can also carry data, for example `Message::Text(String)` or `Shape::Circle { radius: f64 }`.
+
+### Review result
+Functionally correct, but not fully approved yet because the current code has a dead-code warning from commented-out variant calls.
+
+### Next concept
+Continue enums and exhaustive `match`.
+
 ## 2026-07-25 - Counter Method Receiver Forms Review
 
 ### Demonstrated successfully

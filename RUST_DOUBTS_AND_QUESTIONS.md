@@ -79,6 +79,12 @@ Questions can be answered naturally during lessons, one at a time.
 - Why does Rust warn about `fn preview(&self) -> BorrowedBook` and suggest `BorrowedBook<'_>`?
 - How are Rust method receivers `self`, `&self`, and `&mut self` different from Java's `this`?
 
+### Enums and pattern matching
+- In Java enum values are special constant objects/classes, and in C/C++ enums can behave like integers. What exactly is a Rust enum value internally?
+- Are Rust enum variants only integers, or can variants hold different data types?
+- Should unused Rust enum variants be fixed by assigning explicit values like `Red = 1`?
+- Why must Rust `match` handle every enum variant?
+
 ### Struct defaults
 - Can I write a default field value inside a struct definition, such as `starting_sentence: &'static str = "Once upon a time"`?
 
@@ -201,6 +207,13 @@ Questions can be answered naturally during lessons, one at a time.
 - The `Counter` receiver exercise showed all three forms cleanly: `show(&self)` reads, `increment(&mut self)` mutates, and `consume(self)` takes ownership.
 - Prefer saying `consume(self)` "takes ownership and then the value is dropped at the end if not returned" rather than saying it manually deletes the value.
 - Use `println!` instead of `print!` when output should clearly appear on separate lines.
+
+### Enums and pattern matching
+- A Rust enum is a tagged union / sum type: a value is exactly one variant at a time.
+- Unit-like variants such as `TrafficLight::Red` carry no extra data. Rust may represent them compactly internally, often similarly to small integers, but they are not plain integers in normal Rust code.
+- Rust enum variants can carry data, and different variants can carry different data shapes, such as `Text(String)`, `Rgb(u8, u8, u8)`, or `Move { x: i32, y: i32 }`.
+- A warning like "variants are never constructed" means those variants are not used in the current program. It is not fixed by assigning explicit discriminant numbers such as `Red = 1`; construct/use the variants or intentionally allow the warning.
+- Rust `match` on an enum must be exhaustive so every possible valid enum value has defined behavior.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
