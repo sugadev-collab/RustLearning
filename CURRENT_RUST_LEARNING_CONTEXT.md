@@ -13,24 +13,24 @@ Use the larger `LEARNING_PROGRESS.md` and `RUST_DOUBTS_AND_QUESTIONS.md` only fo
 
 ## Latest Approved Exercise
 
-- Created `find_message(id: u32) -> Option<Message>`.
-- Used `match id` to return `Some(Message::...)` for ids `0`, `1`, `2`, and `3`, and `None` for all other ids.
-- In `main`, looped over `0..5_u32` and matched each `Option<Message>`, exercising both `Some(m)` and `None`.
-- Used direct `Some(...)` and `None` instead of `Option::Some(...)` and `Option::None`.
+- Created `describe_number(n: u32)` using `match`.
+- Handled exact values `0`, `1`, `2`, and `3`.
+- Used `_` as the fallback arm for all other `u32` values.
+- Called the function in a `for i in 0..5_u32` loop, proving `_` handled `4`.
 - `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` passed.
 
 ## Current Weak Spots
 
 - Match ergonomics with borrowed enum data is improving, but should be revisited later with `Option<T>` and `Result<T, E>`.
 - `Option<T>` is improving: the learner can now return and match both `Some(...)` and `None`.
-- The wildcard pattern `_` in `match` is a current question.
+- The wildcard pattern `_` is now demonstrated once, but should be reinforced later in enum and `Option` matches.
 - Expression style and `match` readability are improving, but should be reinforced through small exercises.
 
 ## Current Next Concept
 
-Wildcard patterns with `_` and match exhaustiveness.
+Binding fallback values with a named variable instead of `_`.
 
 ## Next Small Exercise
 
 Create a `describe_number(n: u32)` function using `match`.
-Handle `0`, `1`, `2`, and `_`; print a different message for each arm.
+Handle `0`, `1`, and `other`; in the fallback arm, print the actual value using `other`.

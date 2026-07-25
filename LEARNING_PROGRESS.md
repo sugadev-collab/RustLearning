@@ -1,5 +1,26 @@
 # Learning Progress
 
+## 2026-07-25 - Wildcard Match Exercise Approved
+
+### Demonstrated successfully
+- Created `describe_number(n: u32)` using `match`.
+- Handled specific values `0`, `1`, `2`, and `3`.
+- Used `_` as a wildcard fallback for all other `u32` values.
+- Called the function in a `for i in 0..5_u32` loop.
+- Verified that `_` handled the value `4` at runtime.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully.
+
+### Still practicing
+- `_` means "match anything here, but do not bind the value to a name."
+- A named fallback such as `other => ...` can be used when the actual unmatched value is needed.
+- Match arm order matters because Rust checks arms from top to bottom.
+
+### Review result
+Approved as clean. The exercise correctly demonstrates wildcard patterns and match exhaustiveness.
+
+### Next concept
+Binding fallback values with a named variable instead of `_`.
+
 ## 2026-07-25 - Option Message Lookup Approved
 
 ### Demonstrated successfully
