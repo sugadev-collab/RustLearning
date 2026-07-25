@@ -75,6 +75,7 @@ Questions can be answered naturally during lessons, one at a time.
 - For a struct like `Preview<'a>` or `NameHolder<'a>`, does the borrow last until the borrowed struct is dropped, or only until its last use?
 - What happens if the owner of data borrowed by `Preview<'a>` or `NameHolder<'a>` goes out of scope before the borrowed struct?
 - Is `impl<'a> Something<'a>` like Java method generics, and where exactly is that analogy useful vs misleading?
+- For stack values, is the owner and the owned instance/value basically the same local variable? How is this different from `Box<T>`, where the box owner is local but the boxed value is on the heap?
 
 ### Struct defaults
 - Can I write a default field value inside a struct definition, such as `starting_sentence: &'static str = "Once upon a time"`?
@@ -184,6 +185,9 @@ Questions can be answered naturally during lessons, one at a time.
 - If an owner would be dropped or moved while a borrowed struct can still use a reference into it, Rust rejects the code at the owner move/drop point so the borrowed struct can never dangle.
 - In the `BookPreview<'a>` exercise, moving `book_title` after printing the preview is allowed because the borrow through `preview.title` has reached its last use. This is non-lexical lifetime behavior, not a "lexical lifetime" ending at the block boundary.
 - It is slightly misleading to say the preview instance is dropped immediately after its last use. The safer wording is: Rust can end the active borrow after the last use of the reference, even though the variable's lexical scope may continue.
+- In the helper-block version of `BookPreview<'a>`, the preview variable's lexical scope really does end at the closing brace. That makes the borrow end easy to see before moving `book_title`.
+- A local variable like `preview` owns its `BookPreview` value directly. Because `BookPreview` contains `&str` fields, it owns the reference values but only borrows the string bytes owned by `book_title` and `book_author`.
+- A local `String` owner directly stores the `String` value, meaning pointer, length, and capacity. The string's UTF-8 bytes are in a heap buffer owned by that `String`. A `Box<T>` local owner stores a pointer-like box value, and the boxed `T` value lives in heap allocation owned by the box.
 
 ### Toolchain setup
 - A previous `cargo run` or `rustc main.rs` command may have failed with a missing linker on Windows.
@@ -209,6 +213,7 @@ Questions can be answered naturally during lessons, one at a time.
 - The learner may clean comments and experiment code after a review is approved.
 - Important questions should be saved here before cleanup so future chats can continue smoothly.
 - Important learning/project files may be staged and committed to Git when useful so future chats can recover the learning history from the repository. Do not commit generated build artifacts.
+- Current rough progress estimate as of the borrowed-struct helper-block exercise: about 25-30% toward intermediate Rust. Strong beginner fundamentals are forming, especially around ownership and borrowing, but intermediate Rust still requires traits, enums, pattern matching, `Option`/`Result`, modules, collections, iterators, generics, tests, and larger project structure.
 - Current cleaned code baseline was approved after `cargo check`, `cargo clippy`, and `cargo run` passed.
 - A later `Human` exercise transferred the `derive(Debug)` idea, but had unused-field warnings and formatting differences.
 - The `Human` exercise was then cleaned so all fields were read directly and `cargo fmt --check` passed.

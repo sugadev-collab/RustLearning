@@ -1,5 +1,29 @@
 # Learning Progress
 
+## 2026-07-25 - Borrowed Struct Helper Block Review
+
+### Demonstrated successfully
+- Used a helper block around `BookPreview::new(&book_title, &book_author)` so the borrowed `preview` definitely goes out of scope before `book_title` is moved.
+- Printed both borrowed fields while the owners were still alive.
+- Moved `book_title` after the helper block and printed the moved owner successfully.
+- Correctly identified that helper blocks help prevent accidentally using a borrowed preview after moving or mutating the owner.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all completed successfully with no warnings.
+
+### Still practicing
+- The helper block is a lexical scope: `preview` is dropped at the closing brace, so its borrowed fields cannot be used afterward.
+- For this helper-block example, saying the borrow ends at the block boundary is correct. In the previous non-helper-block example, Rust used non-lexical lifetime analysis to end the borrow after the last use.
+- A local variable such as `preview` directly owns its `BookPreview` value. Since `BookPreview` only contains references, it owns the reference values, not the `String` data they point into.
+- For `String`, the local owner value stores pointer/length/capacity directly, while the UTF-8 bytes live in a heap buffer owned by that `String`.
+
+### Review result
+Approved as clean. The helper block correctly makes the borrowed preview's lifetime obvious before moving the owner.
+
+### Progress estimate
+Roughly 25-30% of the way toward intermediate Rust. The learner is moving out of raw beginner territory in ownership, borrowing, `String`/`&str`, UTF-8, `Box<T>`, and simple lifetime annotations, but still needs traits, enums/pattern matching, `Result`/`Option`, modules, collections/iterators, generics, error handling, testing, and larger program structure.
+
+### Next concept
+Structs with owned fields vs borrowed fields.
+
 ## 2026-07-25 - BookPreview Struct Lifetime Small Exercise
 
 ### Demonstrated successfully
