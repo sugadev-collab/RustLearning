@@ -86,6 +86,8 @@ Questions can be answered naturally during lessons, one at a time.
 - Why must Rust `match` handle every enum variant?
 - Is a struct-like enum variant such as `Message::Move { x: f32, y: f32 }` actually a struct?
 - Is it fair to think of a Rust enum like a "quantum particle" where using/matching it reveals which variant it is?
+- How should Rust enums be compared, and when is `#[derive(PartialEq)]` the right beginner-friendly choice?
+- Refresh `if let Some(value) = ...` syntax for `Option<T>`, especially when borrowing with `&option` or `.as_ref()`.
 
 ### Struct defaults
 - Can I write a default field value inside a struct definition, such as `starting_sentence: &'static str = "Once upon a time"`?
@@ -96,6 +98,16 @@ Questions can be answered naturally during lessons, one at a time.
 
 ### Expressions
 - How does `if` work as an expression in Rust?
+
+### Iterators
+- What exactly happens in a chain such as `for_each -> Enumerate::next -> Map::next -> Iter::next`?
+- How does `.zip(lengths)` differ from `.zip(lengths.iter())` in ownership and yielded item types?
+- Why does `.zip(&lengths)` work?
+- What happens when zipped iterators have different lengths?
+- In `.iter().filter(|num| ...)`, why can the closure parameter behave like `&&i32`?
+
+### Operators
+- Give a short Rust refresher on common operators and bitwise operators, focusing only on Rust-specific differences from languages already known.
 
 ## Reviewed But Not Yet Fully Mastered
 
@@ -246,7 +258,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Bigger recap exercises no longer need to wait for weekends. They may be given whenever useful, optionally saved in a separate file, and the learner can complete them later when time allows.
 - If a bigger exercise is unfinished, continue normal lessons/reviews instead of blocking progress; review the bigger exercise whenever the learner brings it back.
 - Bigger recap exercises may include one small unfamiliar concept labeled as a research challenge, so the learner can search, learn, and apply it before the review.
-- First bigger recap exercise has been created at `BIG_EXERCISE_01_TEXT_NOTE_RECAP.md`; it can be completed anytime and should not block normal small lessons.
+- First bigger recap exercise has been created at `docs/BIG_EXERCISE_01_TEXT_NOTE_RECAP.md`; it can be completed anytime and should not block normal small lessons.
 - Treat code comments as possible questions, doubts, or self-answers to review.
 - When the learner explains something in comments, classify it as correct, incomplete, or misleading and teach the missing part.
 - At the start of each new topic, introduce what it is, why it matters, and what to focus on.
@@ -281,3 +293,48 @@ Questions can be answered naturally during lessons, one at a time.
 ## Low Priority Conversation Questions
 
 - Explain small Rust terms slowly as they appear instead of treating them as urgent topics.
+## 2026-07-27 - Pattern Binding Question
+
+- Question from code comment: `small @ 1..=3 => println!("{}", small), //what is this @ represents?`
+- Short answer: `@` means "bind this matched value to a name while also checking it against this pattern." In `small @ 1..=3`, Rust checks whether the value is in the inclusive range `1..=3`; if yes, it stores that actual value in `small`.
+- Revisit briefly when teaching enum patterns with data.
+
+## 2026-07-27 - `@` Versus Match Guard Binding
+
+- Follow-up question: In `n if n % 2 == 0`, `n` also stores the value, so why is `small @ 1..=3` needed?
+- Clarification: a guard binding like `n if n % 2 == 0` first matches any value into `n`, then uses an extra boolean condition. An `@` binding like `small @ 1..=3` matches a more specific pattern and also keeps the matched value.
+- Teaching note: revisit with enums that carry data, because `@` becomes more useful when matching a shape/range while preserving the whole matched part.
+
+## 2026-07-27 - Does Consuming a `Vec` Leave It Empty?
+
+- Question from code comments: Does `for number in numbers` consume only the elements and leave the vector itself empty? Does Rust drop the whole vector?
+- Clarification: `for number in numbers` calls consuming iteration and moves the whole `Vec` into its `IntoIter`. The original `numbers` binding is therefore invalid immediately; it is not an accessible empty vector.
+- The iterator owns the allocation while yielding elements. When iteration finishes and the iterator is dropped, it drops any unyielded elements and releases the allocation.
+- Reinforce this ownership-transfer model when introducing explicit `.into_iter()`.
+
+## 2026-07-28 - Stray `.rcgu.o` Files
+
+- Question: Are root-level files such as `main.6cb17o15xtxc4c0pysj9ykmdx.rcgu.o` necessary?
+- These are temporary compiler object files, not Rust source files and not required to keep the project.
+- Two root-level `.rcgu.o` files were safely deleted. Normal Cargo build artifacts remain under `target/`.
+- `.gitignore` already contains `*.rcgu.o`, so future stray object files will not be tracked by Git.
+
+## 2026-07-28 - Root Folder Cleanup
+
+- User prefers the project root to stay clean so the code does not feel ugly or cluttered.
+- Moved larger learning documents and request notes into `docs/`.
+- Kept `CURRENT_RUST_LEARNING_CONTEXT.md` at the root so each review can still start cheaply.
+- Updated `AGENTS.md` and the compact context to point future reviews to `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.md`.
+
+## 2026-07-28 - Why `Vec::from([..])` Avoids `useless_vec`
+
+- Question: Why does `Vec::from([2_i32, 3_i32, 4_i32])` fix Clippy when `vec![2_i32, 3_i32, 4_i32]` triggered `clippy::useless_vec`?
+- Short answer: Clippy's `useless_vec` lint specifically catches `vec![...]` when an array would be enough for the current code. `Vec::from([..])` is an explicit conversion from an array into a `Vec`, so it communicates that the program intentionally wants an owned growable vector.
+- Teaching note: `vec![...]` is usually the normal way to create a vector. `Vec::from([..])` is useful in this lesson because we want to practice vector iterator methods while avoiding a lint that tries to simplify fixed-size examples into arrays.
+
+## 2026-07-28 - Does `Enumerate` Implement `Iterator`?
+
+- Question from code comment: If `.enumerate()` produces an `Enumerate`, why does `.for_each()` consume an iterator?
+- Clarification: `Enumerate<I>` is a concrete adapter type that implements the `Iterator` trait when its inner `I` implements `Iterator`.
+- `.enumerate()` moves the previous iterator into an `Enumerate` wrapper. Calling `.for_each()` then consumes that concrete `Enumerate` value through the `Iterator::for_each(self, ...)` method.
+- Adapter construction is lazy. The `Map` and `Enumerate` wrappers do not process every item when they are created; `for_each` drives the chain by repeatedly requesting the next item.

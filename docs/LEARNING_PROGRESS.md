@@ -1,5 +1,198 @@
 # Learning Progress
 
+## 2026-07-31 - Methods With Borrowed Receivers Approved
+
+### Demonstrated successfully
+- Moved the free function `describe_quest(quest: &Quest)` into `impl Quest`.
+- Wrote the method as `fn describe(&self)`, borrowing the quest instead of consuming it.
+- Called the method with `quest.describe()` from both the full quest loop and completed-only loop.
+- Kept the program behavior the same after changing from a free function to a method.
+- Renamed the enum variant from `Inprogress` to the more idiomatic `InProgress`.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- Method receivers: `self`, `&self`, and `&mut self`.
+- Methods can group behavior with the data type, while free functions remain useful when behavior does not naturally belong to one type.
+- Returning borrowed string data from methods should be introduced next using `Option<String>` and `&str`.
+
+### Review result
+Approved. The learner correctly converted a borrowed free function into an `impl` method.
+
+### Next concept
+Methods returning borrowed data.
+
+## 2026-07-31 - Quest Log Analyzer Big Checkpoint Approved
+
+### Demonstrated successfully
+- Built a mixed checkpoint program using a `Status` enum, `Quest` struct, `String`, `Option<String>`, `match`, `if let ... else`, vectors, slices, borrowing, and iterator chains.
+- Used `#[derive(PartialEq)]` to compare enum variants in filtering logic.
+- Wrote `describe_quest(quest: &Quest)` and used borrowed access instead of consuming quests.
+- Described every quest with `quests.iter()`.
+- Printed both `Some(tag)` values and a fallback for `None`.
+- Used a guarded string slice preview after checking `description.len() >= 5`.
+- Used helper functions with slice parameters `&[Quest]` instead of `&Vec<Quest>`.
+- Used `.iter().filter(...).collect::<Vec<_>>()` to collect completed quests by borrowing.
+- Used `.iter().map(...).sum::<u32>()` to calculate completed XP.
+- Printed `quests.len()` after filtering and summing, proving the original vector was still usable.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- Enum naming/style polish such as `InProgress` instead of `Inprogress`.
+- String slicing is safe in the current ASCII exercise after a length check, but Unicode-safe slicing should be revisited later.
+- Functions that only read a vector-like sequence should usually accept `&[T]`.
+- `if let ... else` syntax was successfully used but was recently forgotten, so reinforce with more `Option` examples later.
+
+### Review result
+Approved. The learner completed the larger mixed exercise and fixed the review issues without editing assistance.
+
+### Next concept
+Methods and `impl` with borrowed receivers.
+
+## 2026-07-28 - Iterator `filter` Approved
+
+### Demonstrated successfully
+- Created a `Vec<i32>` with `Vec::from([1, 2, 3, 4, 5, 6])`.
+- Used `.iter().filter(...)` to keep even numbers while borrowing the original vector.
+- Used `.collect::<Vec<_>>()` to collect the filtered borrowed items into a vector.
+- Printed `[2, 4, 6]` as the filtered result.
+- Printed the original vector afterward, proving borrowed filtering did not consume it.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- In `.iter().filter(|num| ...)`, `num` is a reference to the iterator item; for `Vec<i32>::iter()`, that makes it effectively `&&i32`.
+- `&&` is logical AND for booleans; bitwise AND is single `&`.
+- The learner requested a short later refresher on Rust operators and bitwise operators, without spending too much time on it.
+
+### Review result
+Approved. The exercise correctly demonstrates borrowed filtering and collection.
+
+### Next concept
+Mixed checkpoint exercise across earlier Rust fundamentals.
+
+## 2026-07-28 - Iterator `sum` Approved
+
+### Demonstrated successfully
+- Created a `Vec<i32>` with `Vec::from([10, 20, 30])`.
+- Used `numbers.iter().sum::<i32>()` to calculate a total while borrowing the vector.
+- Printed the original vector afterward, proving `.iter().sum()` did not consume it.
+- Created a second vector and used `.into_iter().sum::<i32>()` to intentionally consume it.
+- Added a correct comment showing that the consumed vector cannot be printed afterward.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- Consumers such as `.sum()` drive an iterator to completion and return a final value.
+- Whether the original collection survives depends on how the iterator was created: `.iter()` borrows, `.into_iter()` consumes.
+- Variable shadowing with `let numbers = ...` was used correctly, but should be explained again if it becomes confusing.
+
+### Review result
+Approved. The exercise correctly demonstrates borrowed and consumed iterator consumers with `.sum()`.
+
+### Next concept
+Filtering iterator items with `.filter()`.
+
+## 2026-07-28 - Borrowed Versus Consuming Iterator Inputs Approved
+
+### Demonstrated successfully
+- Used `numbers.iter()` to loop over borrowed `i32` values.
+- Printed the `numbers` vector after the borrowed loop, showing that `.iter()` does not consume the vector.
+- Used `words.into_iter()` to consume a `Vec<String>` and move each owned `String` into the loop variable.
+- Added a correct comment explaining that `words` cannot be printed afterward because ownership moved into the iterator.
+- Used `strings.iter().zip(lengths.iter())` to pair two borrowed iterators.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `zip(&lengths)` works because a shared reference to a vector also implements `IntoIterator`, producing borrowed items like `lengths.iter()`.
+- `zip` stops when the shorter iterator ends.
+- Spelling in variable names and output labels, such as `lenght`, should be cleaned up as a small readability habit.
+
+### Review result
+Approved. The exercise correctly shows the difference between borrowed iterator input and consuming iterator input.
+
+### Next concept
+Iterator consumers and reducers with `.sum()`.
+
+## 2026-07-28 - Iterator `zip` Approved
+
+### Demonstrated successfully
+- Reused a `Vec<String>` and a collected `Vec<usize>` of string lengths.
+- Used `strings.iter().zip(lengths)` to pair each borrowed string with one length.
+- Printed each `(string, length)` pair without a numeric range and without indexing.
+- Demonstrated that `zip` can combine a borrowed iterator with a consumed vector iterator.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `zip(lengths)` consumes the `lengths` vector because `Vec<T>` implements `IntoIterator`.
+- `zip(lengths.iter())` would borrow `lengths` instead and yield `&usize`.
+- `zip` stops when the shorter iterator ends, which makes it safer than manually indexing two vectors by the same range.
+- The deeper call chain `for_each -> Enumerate::next -> Map::next -> Iter::next` should be revisited when studying the `Iterator` trait more deeply.
+
+### Review result
+Approved. The exercise correctly demonstrates pairing iterator items with `.zip()` and avoids parallel-vector indexing.
+
+### Next concept
+Borrowing versus consuming iterator inputs.
+
+## 2026-07-28 - Iterator `map` and `collect` Approved
+
+### Demonstrated successfully
+- Borrowed a `Vec<String>` with `strings.iter()`.
+- Used `.map(|word| word.len())` to lazily transform `&String` items into `usize` lengths.
+- Used `.enumerate().for_each(...)` to drive the lazy iterator and print the results.
+- Printed the original vector afterward, proving that shared iteration did not consume it.
+- Collected a second mapped iterator into `Vec<usize>` with `.collect::<Vec<_>>()`.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- Iterator adapters such as `Map` and `Enumerate` are concrete types that implement the `Iterator` trait.
+- Each adapter owns the previous iterator; construction is lazy and traversal begins when a consumer such as `for_each` or `collect` repeatedly calls `next()`.
+- Indexing two vectors by the same range works here, but pairing iterator items directly is safer and clearer.
+
+### Review result
+Approved. The exercise correctly demonstrates lazy mapping, borrowed iteration, terminal consumption, and collecting mapped items.
+
+### Next concept
+Pairing iterator items with `.zip()`.
+
+## 2026-07-28 - Explicit Consuming Iterator Method Approved
+
+### Demonstrated successfully
+- Created a `Vec<String>` with three owned strings.
+- Used `strings.into_iter()` in a `for` loop.
+- Printed each owned `String` yielded by the consuming iterator.
+- Added a comment explaining that `strings` cannot be used after the loop because ownership moved into the iterator.
+- `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `into_iter()` on `Vec<String>` consumes the vector and moves each `String` out.
+- The original vector binding is invalid after the loop; it is not an empty vector that can still be printed.
+- A later `println!("{:?}", strings)` would fail because there is no valid owner left to borrow from.
+
+### Review result
+Approved. The exercise correctly demonstrates consuming iteration with `.into_iter()`.
+
+### Next concept
+Iterator adapter: `.map()`.
+
+## 2026-07-28 - Explicit Borrowed Iterator Methods Approved
+
+### Demonstrated successfully
+- Created a mutable `Vec<i32>` using `Vec::from([2_i32, 3_i32, 4_i32])`.
+- Used `numbers.iter_mut()` to receive mutable references and update each element with `*num += 1`.
+- Used `numbers.iter().enumerate()` to read each element with its index.
+- Printed the whole vector afterward as `[3, 4, 5]`, showing borrowed iteration does not consume the vector.
+- `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `iter()` is shared borrowed iteration: each item is like `&T`.
+- `iter_mut()` is mutable borrowed iteration: each item is like `&mut T`.
+- `Vec::from([..])` can satisfy Clippy when the lesson intentionally wants a `Vec` but the starting values are fixed.
+
+### Review result
+Approved. The exercise correctly demonstrates explicit borrowed iterator methods.
+
+### Next concept
+Explicit consuming iterator method: `.into_iter()`.
+
 ## 2026-07-25 - Wildcard Match Exercise Approved
 
 ### Demonstrated successfully
@@ -402,7 +595,7 @@ Struct lifetime annotations for borrowed fields.
 - Created a `NameHolder` that borrows from a local `String`.
 - Correctly remembered that `&String` can coerce to `&str`.
 - `cargo check`, `cargo clippy`, and `cargo run` all passed.
-- Requested the first larger recap exercise, so `BIG_EXERCISE_01_TEXT_NOTE_RECAP.md` was created.
+- Requested the first larger recap exercise, so `docs/BIG_EXERCISE_01_TEXT_NOTE_RECAP.md` was created.
 
 ### Still practicing
 - `'a` is a generic lifetime parameter, not a Java-style type generic.
@@ -1135,6 +1328,356 @@ Borrowed slices and owner mutation.
 
 ### Next concept
 String mutation methods and UTF-8 boundaries.
+
+## 2026-07-28 - Mutable Borrowed `for` Iteration Approved
+
+### Demonstrated successfully
+- Created a mutable `Vec<i32>`.
+- Used `for number in &mut numbers` to borrow its elements mutably.
+- Used `*number *= 10` to modify each underlying `i32` through an `&mut i32`.
+- Printed the whole vector afterward as `[20, 30, 40]`, proving the vector remained owned and usable.
+
+### Still practicing
+- State the types precisely: the vector is mutably borrowed for the loop, and each `number` is an `&mut i32`.
+- Reinforce how `*number` dereferences the mutable reference to reach the element.
+- A standalone `println!()` before every item creates extra blank lines; this is only an output-style observation.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Explicit borrowed iterator methods: `.iter()` and `.iter_mut()`.
+
+## 2026-07-27 - Consuming `for` Iteration Approved
+
+### Demonstrated successfully
+- Used `for number in numbers` to consume a `Vec<i32>` and print each element by value.
+- Left `numbers.len()` commented out after the consuming loop because the `numbers` binding is no longer usable.
+- Compared consuming iteration directly with an earlier `for number in &numbers` borrowed loop.
+
+### Still practicing
+- The whole `Vec` is moved into the iterator; Rust does not leave an accessible empty vector in `numbers`.
+- The consuming iterator owns the vector's allocation while it yields elements and releases the allocation when it is dropped.
+- Output spelling: `Lenght` should be `Length`.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run` all passed. The code is correct; the ownership explanation in the comments needed clarification.
+
+### Next concept
+Mutable borrowed iteration with `for number in &mut numbers`.
+
+## 2026-07-27 - Borrowed `for` Iteration Approved
+
+### Demonstrated successfully
+- Created a `Vec<i32>` with three numbers.
+- Used `for number in &numbers` to iterate over borrowed elements.
+- Printed each number in insertion order.
+- Printed `numbers.len()` after the loop, proving the vector was not consumed and still had length `3`.
+
+### Still practicing
+- Distinguishing borrowing iteration from consuming iteration.
+- Output spelling: `Lenght` should be `Length`.
+- Next contrast: `for number in numbers` consumes the vector, so `numbers.len()` cannot be used afterward.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Consuming iteration with `for number in numbers`.
+
+## 2026-07-27 - `while let` With `Vec::pop()` Approved
+
+### Demonstrated successfully
+- Created a mutable `Vec<i32>`.
+- Used `while let Some(number) = numbers.pop()` to loop over values returned from `pop()`.
+- Correctly used the `Some(...)` case to bind each popped number.
+- Let the loop stop naturally when `pop()` returned `None`.
+
+### Still practicing
+- Remembering that `Vec::pop()` removes from the end, so the printed order is reverse insertion order.
+- Output spelling: `Nmuber` should be `Number`.
+- Next contrast: `while let ... pop()` consumes/drains the vector, while `for number in &numbers` borrows and leaves the vector usable.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Iterating with `for` without consuming a vector.
+
+## 2026-07-27 - `if let ... else` With `Option<String>` Approved
+
+### Demonstrated successfully
+- Created a function taking `Option<String>`.
+- Used `if let Some(user_name) = name { ... } else { ... }`.
+- Called the function with both `Some(...)` and `None`.
+- Correctly handled the present-value path and the missing-value fallback.
+
+### Still practicing
+- Naming/text precision: `print_username_or_gust` should be `print_username_or_guest`.
+- Output spelling: `borowed` should be `borrowed`.
+- Rust concept is correct; these are readability/style notes, not compiler errors.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+`while let` loops.
+
+## 2026-07-27 - `Option<String>` Owned Versus Borrowed Approved
+
+### Demonstrated successfully
+- Created `print_username_owned(name: Option<String>)`.
+- Created `print_username_borrowed(name: &Option<String>)`.
+- Moved an owned `Some("Chat Gpt".to_string())` into the owned function.
+- Reused the borrowed value twice with `print_username_borrowed(borrowed_username)`.
+- Correctly noticed in the previous attempt that a moved `username` cannot be borrowed afterward.
+
+### Still practicing
+- The submitted borrowed value used `let borrowed_username = &Some("Gemini".to_string())`.
+- This compiles because Rust extends the temporary lifetime for the reference binding, but the clearer learning pattern is:
+  `let borrowed_username = Some("Gemini".to_string()); print_username_borrowed(&borrowed_username);`
+- Small output spelling issue: `borowed` should be `borrowed`.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+`if let ... else`.
+
+## 2026-07-27 - `if let` With Borrowed `Option<String>` Approved
+
+### Demonstrated successfully
+- Created `print_username(name: &Option<String>)`.
+- Used `if let Some(user_name) = name` to handle only the `Some(...)` case.
+- Called the function with a `Some("Chat Gpt".to_string())` value and with `None`.
+- Verified that only the `Some(...)` call prints output.
+
+### Still practicing
+- The exercise requested `Option<String>` by value, but the submitted solution used `&Option<String>`.
+- This is valid Rust and a useful borrowed version, but the ownership difference needs one focused comparison.
+- `Option::Some(...)` and `Option::None` are correct; the shorter forms `Some(...)` and `None` are more common when the type is clear.
+
+### Review result
+Approved as a valid borrowed `Option<T>` solution. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+`Option<String>` by value versus `&Option<String>`.
+
+## 2026-07-27 - `if let` Enum Variant Approved
+
+### Demonstrated successfully
+- Created `print_write_message(message: &Message)`.
+- Used `if let Message::Write(text) = message` to handle only one enum variant.
+- Called the function with `Write` and non-`Write` variants, proving the non-matching variants are ignored.
+- Kept all enum variants and `handle_message` used, removing the previous dead-code warnings.
+
+### Still practicing
+- Choosing between `match` and `if let`: use `match` when every variant needs meaningful handling, and `if let` when only one pattern matters.
+- Reinforce `if let` with `Option<T>`, because `Some(...)` / `None` is the most common beginner-friendly use case.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+`if let` with `Option<T>`.
+
+## 2026-07-27 - Struct-Like Resize Variant Reinforcement Approved
+
+### Demonstrated successfully
+- Added the struct-like enum variant `Resize { width: u32, height: u32 }`.
+- Matched it with `Message::Resize { width, height }`.
+- Constructed a `Resize` value using named fields in an order different from the declaration, showing that field names matter more than order.
+- Borrowed the `Resize` value into `handle_message(&dimension)`.
+
+### Still practicing
+- This was useful reinforcement, but not a brand-new concept: earlier notes already include struct-like variants and borrowed enum matching.
+- Move forward to a new pattern-matching tool rather than repeating enum variant shapes again.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+`if let` for matching one enum variant.
+
+## 2026-07-27 - Borrowed Enum With Data Approved
+
+### Demonstrated successfully
+- Changed `handle_message` from taking `Message` by value to taking `&Message`.
+- Called `handle_message(&message)` twice with the same `Message::Write(String)` value.
+- Matched a borrowed enum using `match message` and handled all variants.
+- Confirmed that borrowing lets the caller keep ownership of the enum after the function call.
+
+### Still practicing
+- Understanding match ergonomics: when matching `&Message`, patterns like `Message::Write(message)` still work because Rust borrows inner data instead of moving the `String`.
+- Noticing the difference between borrowing named enum values and borrowing temporary enum values such as `&Message::Quit`.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Struct-like enum variants.
+
+## 2026-07-27 - Enum Variants With Data Approved
+
+### Demonstrated successfully
+- Created `Message` with unit-like, tuple-like, and owned-data variants: `Quit`, `Move(i32, i32)`, and `Write(String)`.
+- Used exhaustive `match` over all enum variants.
+- Destructured `Move(x, y)` to read both stored coordinates.
+- Destructured `Write(message)` to read the stored `String`.
+- Called `handle_message` once for each variant.
+
+### Still practicing
+- Remembering that `handle_message(message: Message)` takes ownership of the whole enum value.
+- If the active variant owns data, such as `Write(String)`, matching by value can move that owned data into the match arm.
+- Borrowing enum values next will show how to inspect the same enum more than once.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Borrowing enum values with attached data.
+
+## 2026-07-27 - Simple Unit Enum Approved
+
+### Demonstrated successfully
+- Created a simple enum with unit variants: `Red`, `Yellow`, and `Green`.
+- Wrote `describe_light(light: TraficLight)` and matched all variants exhaustively.
+- Called the function once for each enum variant.
+- Verified the program output for all three cases.
+
+### Still practicing
+- Naming precision: `TraficLight` compiles, but `TrafficLight` is the intended spelling and better for readability.
+- Reinforcing that enum variants are accessed with `EnumName::Variant`.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Enums with data attached to variants.
+
+## 2026-07-27 - Pattern Binding With `@` Approved
+
+### Demonstrated successfully
+- Used `small @ 1..=3` to both match a range and bind the matched value.
+- Kept an exact `0` arm before broader arms.
+- Used a match guard `n if n % 2 == 0` after the `@` range.
+- Used a named fallback arm for remaining odd values.
+- Proved through `0..7_u32` that `1`, `2`, and `3` hit the `@` arm, `4` and `6` hit the even guard, and `5` hits the fallback.
+
+### Still practicing
+- Understanding the meaning of `@`: it binds a name to a value while also testing that value against a pattern.
+- Reinforcing match arm order when exact patterns, range bindings, guards, and fallback arms appear together.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Enum basics with simple unit variants.
+
+## 2026-07-27 - Match Guard Approved
+
+### Demonstrated successfully
+- Added a separate exact `0` arm before the broader guarded pattern.
+- Used `n if n % 2 == 0` to match non-zero even numbers after `0` was handled.
+- Printed the captured value in both non-zero arms.
+- Proved through `0..7_u32` that `0` hits its exact arm, `2`, `4`, and `6` hit the guard, and odd values hit the fallback.
+
+### Still practicing
+- Reinforcing arm order: earlier match arms get the first chance.
+- Combining range patterns, guards, and captured values cleanly.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Binding inside a pattern with `@`.
+
+## 2026-07-27 - Match Guard Attempt Review
+
+### Demonstrated successfully
+- Used a match guard with `n if n % 2 == 0`.
+- Captured the guarded value and printed it.
+- Used a named fallback arm for odd numbers.
+
+### Still practicing
+- Handling exact special cases before broader guarded patterns.
+- Remembering that `0 % 2 == 0`, so a general even-number guard also matches `0`.
+
+### Review result
+`cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed. The Rust syntax is clean, but the exercise is not exact yet because the requested separate `0` arm is missing.
+
+### Next concept
+Finish match guards with a separate exact `0` arm.
+
+## 2026-07-27 - Match Alternative Pattern Approved
+
+### Demonstrated successfully
+- Used `1 | 2` as an alternative pattern inside `match`.
+- Kept a range arm with `3..=5`.
+- Kept a named fallback arm `other` and printed its captured value.
+- Expanded the loop to `0..7_u32`, proving `1` and `2` share an arm, `3`, `4`, and `5` share the range arm, and `6` reaches the fallback.
+
+### Still practicing
+- Reinforcing how exact values, alternatives, ranges, and fallbacks work together.
+- Learning the difference between pattern matching by shape/value and checking extra conditions.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Match guards with `if`.
+
+## 2026-07-26 - Match Range Pattern Approved
+
+### Demonstrated successfully
+- Used `2..=4` as an inclusive range pattern inside `match`.
+- Kept exact arms for `0` and `1`.
+- Kept a named fallback arm `other` and printed its captured value.
+- Expanded the loop to `0..6_u32`, proving that `2`, `3`, and `4` hit the range arm while `5` hit the fallback.
+
+### Still practicing
+- Reinforcing pattern choice: exact value, range, named fallback, and later alternatives.
+- Keeping match arms ordered from more specific to broader patterns.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Match multiple alternatives with `|`.
+
+## 2026-07-26 - Named Fallback Binding Approved
+
+### Demonstrated successfully
+- Revised `describe_number(n: u32)` to match the requested shape: `0`, `1`, and `other`.
+- Used the named fallback arm `other` to capture and print every non-special value.
+- Proved through `for i in 0..5_u32` that `2`, `3`, and `4` all go through the fallback arm.
+
+### Still practicing
+- Reinforcing when to use `_` versus a named fallback binding.
+- Building confidence with broader match patterns.
+
+### Review result
+Approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Next concept
+Match range patterns with `..=`.
+
+## 2026-07-25 - Named Fallback Binding Attempt Review
+
+### Demonstrated successfully
+- Used a final `match` arm named `other` instead of `_`.
+- Printed the actual unmatched value from the fallback arm.
+- Called `describe_number(i)` from a `for i in 0..5_u32` loop.
+
+### Still practicing
+- Following the exact match-shape requested by the exercise.
+- Letting a named fallback arm handle all non-special cases, not only the final remaining value after extra exact arms.
+
+### Review result
+`cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed. The Rust concept is demonstrated, but the exercise is not exact yet because the code still handles `2` and `3` explicitly. The requested shape was `0`, `1`, and `other`.
+
+### Next concept
+Finish the named fallback binding exercise exactly as requested.
 
 ## 2026-07-13 - `replace_range` And Borrow End Review
 
