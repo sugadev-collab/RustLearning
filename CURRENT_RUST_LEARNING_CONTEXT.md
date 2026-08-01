@@ -15,11 +15,11 @@ Use the larger `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.m
 
 ## Latest Approved Exercise
 
-- Converted `describe_quest(quest: &Quest)` into a method `Quest::describe(&self)`.
-- Called the method with `quest.describe()` from both full and completed-only loops.
-- Kept the Quest Log Analyzer behavior unchanged.
-- Used `&self` correctly to borrow quest data without consuming it.
-- Renamed `Inprogress` to idiomatic `InProgress`.
+- Added `fn tag_label(&self) -> &str` inside `impl Quest`.
+- Returned borrowed tag text from `Some(tag)` without cloning or moving the `String`.
+- Returned the string literal `"No tag"` for `None`.
+- Used `self.tag_label()` inside `describe(&self)`.
+- Kept the Quest Log Analyzer behavior correct.
 - `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` passed.
 
 ## Current Weak Spots
@@ -59,7 +59,9 @@ Use the larger `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.m
 - Slice parameters `&[T]` were introduced through Clippy and successfully applied.
 - String byte slicing was guarded by `.len()` and used only with ASCII; revisit Unicode-safe handling later.
 - Method receiver `&self` has been demonstrated once in `impl Quest`.
-- Returning borrowed string data from methods is a good next step.
+- Returning borrowed string data from methods has been demonstrated once with `fn tag_label(&self) -> &str`.
+- Lifetime elision for returning data borrowed from `&self` should be explained soon.
+- String literals as `&'static str` were used implicitly as a fallback return value.
 - Learner asked why `Vec::from([..])` avoids Clippy's `useless_vec` warning while `vec![..]` does not.
 - Learner wants a compact refresher on Rust operators and bitwise operators later.
 - Expression style and `match` readability are improving, but should be reinforced through small exercises.
@@ -67,10 +69,10 @@ Use the larger `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.m
 
 ## Current Next Concept
 
-Methods returning borrowed data.
+Method receivers: `self`, `&self`, and `&mut self`.
 
 ## Next Small Exercise
 
-Add a method `fn tag_label(&self) -> &str` to `impl Quest`.
-It should return the tag text when `tag` is `Some`, and `"No tag"` when it is `None`.
-Use this method inside `describe(&self)` instead of writing the `if let` directly there.
+Add a method `fn complete(&mut self)` to `impl Quest`.
+It should change `self.status` to `Status::Completed`.
+In `main`, make the quest vector mutable and call `complete()` on one quest before printing the report.

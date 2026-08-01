@@ -44,16 +44,19 @@ impl Quest {
 
         println!("XP: {}", self.reward_xp);
 
-        if let Some(tag) = &self.tag {
-            println!("Tag: {}", tag)
-        } else {
-            println!("No tag.")
-        }
+        println!("Tag: {}", self.tag_label());
 
         if self.description.len() >= 5 {
             println!("Preview: {}.......", &self.description[0..5]);
         };
         println!();
+    }
+
+    fn tag_label(&self) -> &str {
+        if let Some(tag) = &self.tag {
+            return tag;
+        };
+        "No tag"
     }
 }
 

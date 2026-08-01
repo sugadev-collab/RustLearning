@@ -1,5 +1,26 @@
 # Learning Progress
 
+## 2026-08-01 - Methods Returning Borrowed Data Approved
+
+### Demonstrated successfully
+- Added `fn tag_label(&self) -> &str` inside `impl Quest`.
+- Returned borrowed tag text from `Some(tag)` without cloning or moving the `String`.
+- Returned the string literal `"No tag"` for `None`.
+- Used `self.tag_label()` inside `describe(&self)` instead of writing the `if let` directly there.
+- Kept the Quest Log Analyzer behavior correct.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- A method returning `&str` can return either a slice borrowed from `self` or a string literal, because a string literal has the long-lived type `&'static str`.
+- `if let Some(tag) = &self.tag` makes `tag` a borrowed string value, not an owned moved `String`.
+- This is a good place to reinforce lifetime elision later: Rust understands the returned borrowed tag is tied to `&self`.
+
+### Review result
+Approved. The learner correctly wrote a method that returns borrowed string data without unnecessary cloning.
+
+### Next concept
+Method receivers: `self`, `&self`, and `&mut self`.
+
 ## 2026-07-31 - Methods With Borrowed Receivers Approved
 
 ### Demonstrated successfully
