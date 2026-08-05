@@ -293,6 +293,47 @@ Questions can be answered naturally during lessons, one at a time.
 ## Low Priority Conversation Questions
 
 - Explain small Rust terms slowly as they appear instead of treating them as urgent topics.
+
+## 2026-08-03 - Explicit Receiver Syntax Versus Java Static Methods
+
+- Question: Is `String::len(&text)` a direct/static call like a Java static method?
+- Short answer: it uses type-qualified syntax, but `len` is still a method because it requires a receiver (`&self`), supplied explicitly as `&text`. `String::new()` has no receiver and is an associated function, which is closer to a Java static method.
+- Teaching note: reinforce once with `String::new()` versus `text.len()`.
+
+## 2026-08-03 - Nine-Day Learning Priority
+
+- The learner has nine days remaining for this focused tutoring pace and wants a visible percentage estimate without rushing important Rust concepts.
+- Spend hands-on exercise time on high-value concepts; explain lower-priority details briefly in chat, accepting that they can be relearned later when needed.
+- Current estimate: about 40% of the overall path toward intermediate Rust, about 60% for the ownership/borrowing foundation, and about 30-35% for independently reusable mastery.
+- Learning has taken place across about 21 calendar days with some skipped days; do not treat this as a fixed "intermediate in 30 days" challenge.
+- Plan a consolidation big exercise for 2026-08-04 using already taught concepts. Teach `Result`, `?`, and file input carefully afterward instead of rushing them as prerequisites.
+- A stable roadmap now lives in `docs/RUST_LEARNING_ROADMAP.md`, and the current consolidation specification lives in `docs/QUEST_REVIEW_PROJECT.md`.
+- In the first chat on 2026-10-09, remind the learner about the project-planning checkpoint; if there is no chat that day, remind them in the first later chat. Reassess readiness before starting the real project, then create or update a comprehensive project plan and AI handoff that a less capable assistant can follow.
+- Big-exercise preference: provide one complete requirements file, allow the learner to implement the whole attempt independently, and review at the end. Use one-by-one guidance only if the learner asks for help.
+
+## 2026-08-03 - Must `self` Be the First Parameter?
+
+- Question: Can a method put `self` in the second parameter position and still remain a method?
+- Short answer: no. A Rust method receiver (`self`, `&self`, `&mut self`, and other supported receiver forms) must be the first parameter. A function in an `impl` with no receiver is called an associated function and must be called with type-qualified syntax such as `Type::function(...)`.
+- A normal parameter such as `other: &Self` does not turn an associated function into a method; the special receiver is what matters.
+
+## 2026-08-03 - Does Mutability Move With Ownership?
+
+- Question from code comment: if `let mut text = ...; let text_1 = text;`, does the mutability move along with the owned `String`?
+- Short answer: no. Ownership moves the `String` value, but `mut` belongs to the variable binding. The new binding must be declared as `let mut text_1 = text;` if the code wants to mutate through `text_1`.
+- Teaching note: compare with Java/C++ variable modifiers carefully; in Rust, mutability is permission on a binding, not a permanent property stored inside the object.
+
+## 2026-08-03 - Double References To Mutable References
+
+- Question from code comment: in `let b = &mut a; let c: &&mut String = &b; let _d = &c[0..2];`, is this accepted because it is not mixing mutable and immutable borrows from the original owner?
+- Short answer: mostly yes, but more precisely, `c` is an immutable borrow of the mutable-reference variable `b`, not a separate immutable borrow directly competing with `a`. Rust can also auto-deref through references for indexing.
+- Teaching note: revisit with a smaller scoped example showing `&mut String` being used first for mutation and then temporarily reborrowed for reading.
+
+## 2026-08-03 - Calling `&self` Methods Through `&mut T`
+
+- Question from code comment: after getting `quest` from `quests.get_mut(1)`, why is `quest.describe()` allowed when `describe` takes `&self`?
+- Short answer: `quest` has type `&mut Quest`, but Rust can temporarily reborrow it as `&Quest` for the duration of the `describe()` call. During that shared reborrow, the code cannot also mutate the same quest.
+- Teaching note: revisit this when explaining reborrowing and method-call auto-borrowing.
 ## 2026-07-27 - Pattern Binding Question
 
 - Question from code comment: `small @ 1..=3 => println!("{}", small), //what is this @ represents?`

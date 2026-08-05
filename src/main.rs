@@ -1,131 +1,116 @@
 #[derive(PartialEq)]
-enum Status {
-    NotStarted,
-    InProgress,
+enum QuestStatus {
+    Planned,
+    Active,
     Completed,
-    Failed,
 }
-
 struct Quest {
     title: String,
-    description: String,
     reward_xp: u32,
-    status: Status,
-    tag: Option<String>,
+    status: QuestStatus,
+    note: Option<String>,
 }
-
 impl Quest {
-    fn new(
-        title: String,
-        description: String,
-        reward_xp: u32,
-        status: Status,
-        tag: Option<String>,
-    ) -> Self {
+    fn new(title: String, reward_xp: u32, note: Option<String>) -> Self {
         Self {
             title,
-            description,
             reward_xp,
-            status,
-            tag,
+            status: QuestStatus::Planned,
+            note,
         }
     }
 
-    fn describe(&self) {
-        println!(".......Quest Description.......");
-        println!("Title: {}", self.title);
+    fn title(&self) -> &str {
+        &self.title
+    }
 
+    fn active(&mut self) {
+        self.status = QuestStatus::Active;
+    }
+    fn complete(&mut self) {
+        self.status = QuestStatus::Completed;
+    }
+    fn _change_status(&mut self, status: QuestStatus) {
+        self.status = status
+    }
+    fn into_reward_xp(self) -> u32 {
+        println!("Consuming the quest...");
+        self.reward_xp
+    }
+
+    fn print_note(&self) {
+        if let Some(note) = &self.note {
+            println!("Note: {}", note);
+        }
+    }
+    fn print_status(&self) {
         match self.status {
-            Status::NotStarted => println!("NotStarted."),
-            Status::InProgress => println!("InProgress."),
-            Status::Completed => println!("Completed."),
-            Status::Failed => println!("Failed."),
+            QuestStatus::Planned => println!("Will start soon."),
+            QuestStatus::Active => println!("Ongoing."),
+            QuestStatus::Completed => println!("done."),
         }
-
-        println!("XP: {}", self.reward_xp);
-
-        println!("Tag: {}", self.tag_label());
-
-        if self.description.len() >= 5 {
-            println!("Preview: {}.......", &self.description[0..5]);
-        };
-        println!();
-    }
-
-    fn tag_label(&self) -> &str {
-        if let Some(tag) = &self.tag {
-            return tag;
-        };
-        "No tag"
     }
 }
 
-fn filter_by_status(status: Status, quests: &[Quest]) -> Vec<&Quest> {
+fn sum_of_completed_xp(quests: &[Quest]) -> u32 {
     quests
         .iter()
-        .filter(|quest| status == quest.status)
-        .collect::<Vec<_>>()
-}
-
-fn sum_completed_xp(quests: &[Quest]) -> u32 {
-    let completed_quests = filter_by_status(Status::Completed, quests);
-
-    completed_quests
-        .iter()
+        .filter(|quest| quest.status == QuestStatus::Completed)
         .map(|quest| quest.reward_xp)
         .sum::<u32>()
 }
 
 fn main() {
-    let quests = vec![
+    let mut quests = vec![
         Quest::new(
-            "Mining".to_string(),
-            "Start your first mining!".to_string(),
-            100_u32,
-            Status::NotStarted,
-            Some("Congrats".to_string()),
-        ),
-        Quest::new(
-            "Building".to_string(),
-            "Finish your first Townhall upgrade!".to_string(),
-            10000_u32,
-            Status::InProgress,
-            Some("Unlock new features.".to_string()),
-        ),
-        Quest::new(
-            "Travaling".to_string(),
-            "Finish your first journy!".to_string(),
+            "Making Chatgpt From scratch".to_string(),
             1000_u32,
-            Status::Completed,
-            Some("Find valueable things along thw way.".to_string()),
+            Option::Some("Be careful and dont make mistake".to_string()),
         ),
         Quest::new(
-            "Attack".to_string(),
-            "Attack the deamon".to_string(),
+            "Train Chat gpt".to_string(),
+            100_000_000_u32,
+            Some("Be nice with electricity bill".to_string()),
+        ),
+        Quest::new(
+            "Ordering and Reciving Flood of Ram supply".to_string(),
             1000_u32,
-            Status::Failed,
-            None,
+            Some("HBM memories are importent Not DDR5".to_string()),
         ),
-        Quest::new(
-            "Login".to_string(),
-            "Login Everyday".to_string(),
-            10_u32,
-            Status::Completed,
-            None,
-        ),
+        Quest::new("Make Nvidia Grate again".to_string(), 100_000_000_u32, None),
     ];
 
+    if let Some(quest) = quests.get_mut(2) {
+        quest.active();
+        quest.complete();
+        quest.print_note();
+        println!()
+    }
+    println!();
+    quests.iter().for_each(|quest| {
+        println!("Title: {}", quest.title());
+        quest.print_status();
+    });
+
+    let sum = sum_of_completed_xp(&quests);
+
+    println!("Sum of completed XP: {}Xp", sum);
+
+    println!("proof that the quests are only borrowed..");
+
     for quest in quests.iter() {
-        quest.describe();
+        println!("Title: {}", quest.title)
     }
 
-    let completed_quests = filter_by_status(Status::Completed, &quests);
+    let consuming_quest = Quest::new(
+        "Chad gpt is comming".to_string(),
+        1_000_000_000_u32,
+        Some("Wait for it...".to_string()),
+    );
 
-    let sum_xp_of_completed = sum_completed_xp(&quests);
-
-    println!("Total quests: {}", quests.len());
-    println!();
-    println!("Completed Only.........");
-    completed_quests.iter().for_each(|quest| quest.describe());
-    println!("Total completed XP: {}", sum_xp_of_completed);
+    println!(
+        "Consumed Quest but xp is here: {}xp",
+        consuming_quest.into_reward_xp()
+    );
+    // println!("This not gonna work: {}", consuming_quest.title)
 }

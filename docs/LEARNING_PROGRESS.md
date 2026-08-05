@@ -1,5 +1,240 @@
 # Learning Progress
 
+# 2026-08-05 - Quest Review Consolidation Approved
+
+### Demonstrated successfully
+- Implemented `Quest::new(title, reward_xp, note)` as an associated function that always initializes `status` to `QuestStatus::Planned`.
+- Used `&self`, `&mut self`, and consuming `self` receivers for reading, mutation, and ownership transfer.
+- Built and mutated a `Vec<Quest>` with `Vec::get_mut`, handled `Option<String>` with `if let`, and described every status with `match`.
+- Passed a borrowed quest slice to a report function and used `iter().filter(...).map(...).sum()` to total completed XP.
+- Used `quests` again after the XP report, proving that the slice and iterator chain borrowed rather than consumed the vector.
+- Demonstrated the consuming receiver on a separate quest so the main vector remained usable.
+
+### Still practicing
+- These concepts are now consolidated in one independent program, but receiver selection, borrowed iterator item types, and `Option` handling should continue to recur in later projects before being considered mastered.
+- The `Active` state is assigned and therefore satisfies the exercise; in a future user-facing program, state transitions should also be made observable when that behavior matters.
+- Small text/readability cleanup can be done later, but it is not a Rust correctness issue.
+
+### Review result
+Approved. Every requirement in `docs/QUEST_REVIEW_PROJECT.md` is present. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+`Result<T, E>` for operations that can succeed or fail.
+
+# 2026-08-04 - Quest Review Skeleton Approved
+
+### Demonstrated successfully
+- Translated an explicit data-model requirement into a three-variant `QuestStatus` enum.
+- Created the requested `Quest` struct with `String`, `u32`, `QuestStatus`, and `Option<String>` fields.
+- Added the custom `impl Quest` block and kept the phase intentionally free of behavior.
+
+### Still practicing
+- The enum and struct are currently unused, so dead-code warnings are expected until later phases construct and inspect quests.
+- The complete Quest Review requirements combine associated functions, every receiver form, collections, `Option`, matching, borrowing, slices, and iterator reporting.
+- For big exercises, the learner prefers receiving the complete specification and working independently instead of mandatory one-by-one approval gates.
+
+### Review result
+Phase 1 approved. `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run --quiet` passed with only the two expected dead-code warnings.
+
+### Next concept
+Independent consolidation of associated functions, method receivers, collections, and borrowing.
+
+# 2026-08-04 - Associated Function Versus Method Approved
+
+### Demonstrated successfully
+- Created a `String` with `String::new()`.
+- Correctly identified `String::new()` as an associated function with no `self` receiver.
+- Correctly identified `text.len()` as a method call whose receiver is borrowed as `&self`.
+- Used `_len` intentionally to avoid an unused-variable warning during a concept-only exercise.
+
+### Still practicing
+- Reinforce the distinction later inside custom `impl` blocks, where both receiver-free associated functions and receiver methods can live together.
+- Keep separating broad wording from precise wording: all functions inside an `impl` are associated with the type, but only receiver functions are called as methods.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+Big consolidation exercise using existing concepts.
+
+## 2026-08-03 - Immutable Method Auto-Borrowing Approved
+
+### Demonstrated successfully
+- Created an immutable `String` binding named `text`.
+- Called `text.len()` using normal method-call syntax and implicit shared borrowing.
+- Called `String::len(&text)` using the explicit receiver form.
+- Printed equal results from both forms.
+- Removed the unnecessary `mut` that Clippy identified in the first attempt.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `String::len(&text)` is explicit receiver syntax for a method, not a receiver-free Java-style static method.
+- An associated function such as `String::new()` has no `self` receiver and is the closer Rust equivalent to a Java static method.
+- This distinction should be reinforced once before moving into error handling.
+
+### Roadmap estimate and learning pace
+- Overall progress toward intermediate Rust is now estimated at about 40%.
+- Ownership/borrowing foundation is about 60% toward the expected intermediate level.
+- Independently reusable mastery is about 30-35%, because enums, `Option`, iterators, lifetimes, and receiver forms have often been demonstrated only once.
+- During the learner's remaining nine-day focused period, preserve depth for ownership, `Result`/error handling, traits, modules, testing, and program structure. Lower-priority syntax and library details can be explained briefly in chat and revisited when they appear naturally.
+- Plan the next big exercise after associated functions versus methods plus a focused introduction to `Result`, `?`, and basic file input.
+
+### Review result
+Approved. The learner correctly demonstrated automatic shared borrowing for an `&self` method and its explicit receiver form.
+
+### Next concept
+Associated functions versus methods.
+
+## 2026-08-03 - Explicit Mutable Receiver Call Approved
+
+### Demonstrated successfully
+- Created a mutable `String` binding named `text`.
+- Called `text.push_str(" is")` using normal method-call syntax.
+- Printed the string after the first mutation.
+- Called `String::push_str(&mut text, " lol.")` using the explicit receiver form.
+- Printed the string after the second mutation.
+- Correctly commented that the first form passes the receiver borrow implicitly and the second form passes `&mut text` explicitly.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- Method-call syntax can hide receiver borrowing, such as `&self` or `&mut self`.
+- The explicit receiver form makes the hidden borrow visible.
+- Small spelling/readability issues remain in comments, such as `instence` and `implecitly`, but they do not affect compilation.
+
+### Review result
+Approved. The learner correctly connected method-call syntax with the explicit `&mut self` receiver argument.
+
+### Next concept
+Method-call auto-borrowing for `&self`.
+
+## 2026-08-03 - Method Auto-Borrowing Approved
+
+### Demonstrated successfully
+- Created a mutable `String` binding named `text`.
+- Called `text.push_str(" is lol")`.
+- Correctly recognized that `push_str` uses a mutable receiver, written as `&mut self` in the method definition.
+- Printed `text` after the method call, showing that the temporary mutable borrow ended.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `push_str` is a method, not a free function.
+- The borrow created by method-call syntax is temporary and ends after the method call.
+- The user-facing call `text.push_str(...)` hides the explicit receiver argument that Rust conceptually passes as `&mut text`.
+
+### Review result
+Approved. The learner correctly demonstrated method-call auto-borrowing for an `&mut self` method.
+
+### Next concept
+Explicit method call form: `Type::method(&mut value, ...)`.
+
+## 2026-08-03 - Mutability Belongs To Bindings Approved
+
+### Demonstrated successfully
+- Created an immutable `String` binding named `text`.
+- Moved the owned `String` value into a new mutable binding named `text_mut`.
+- Mutated the value through `text_mut` with `push_str`.
+- Printed the mutated value.
+- Commented that the old `text` binding is unavailable because ownership moved to `text_mut`.
+- Improved the comment wording to say the new binding is mutable.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `mut` is permission on a binding, not a permanent property of the `String` value.
+- A method such as `push_str` temporarily borrows the receiver mutably during the method call.
+- Generated-looking files such as `src/main.exe` and `src/main.pdb` appeared in the worktree; they should not be committed as learning source.
+
+### Review result
+Approved. The learner correctly separated ownership movement from binding mutability.
+
+### Next concept
+Method-call auto-borrowing for `&mut self`.
+
+## 2026-08-03 - Borrow Ends After Last Use Approved
+
+### Demonstrated successfully
+- Created a `String`, moved it into a mutable binding, and borrowed it mutably inside a scoped block.
+- Mutated through `text_ref` with `push_str`.
+- Created `slice` with `&text_ref[0..6]` and printed it.
+- Mutated through `text_ref` again after the last use of `slice`.
+- Printed the final owner after the block.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- A borrow can end after its last use, not only at the closing brace.
+- `mut` is attached to a binding such as `text_1`, not to the `String` value itself.
+- Moving ownership transfers the value, but the new variable decides whether that binding is mutable.
+
+### Review result
+Approved. The learner correctly demonstrated that the temporary slice borrow ends before a later mutable use through the same reference.
+
+### Next concept
+Mutability belongs to bindings, not values.
+
+## 2026-08-03 - Reborrowing Through Mutable Reference Approved
+
+### Demonstrated successfully
+- Cleaned the previous large Quest exercise out of `src/main.rs` after the approved concepts were preserved in the learning notes.
+- Created a small scoped block around a mutable borrow.
+- Bound `text_ref` as `&mut text`.
+- Mutated the string through `text_ref` with `push_str`.
+- Read a string slice through the same reference using `&text_ref[0..6]`.
+- Printed the original `text` after the block, proving the mutable borrow had ended.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- Reading through a mutable reference is allowed when the code is only reading at that moment.
+- A scoped block can make borrow lifetimes easier to see.
+- String indexes like `0..6` are byte indexes; this example is ASCII-safe, but Unicode-safe slicing still needs a later lesson.
+
+### Review result
+Approved. The learner correctly demonstrated mutating through `&mut String`, then reading a slice through that same reference.
+
+### Next concept
+Borrow lifetimes inside a block: a borrow ends after its last use.
+
+## 2026-08-03 - Consuming Method Receiver Approved
+
+### Demonstrated successfully
+- Added `fn into_reward_xp(self) -> u32` inside `impl Quest`.
+- Returned `self.reward_xp` from a method that consumes the whole `Quest`.
+- Created one temporary quest near the end of `main`.
+- Called `temp_quest.into_reward_xp()` and printed the returned XP.
+- Correctly noted that `temp_quest` is moved after the consuming method call.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- A `self` receiver takes ownership of the whole value, like passing the value into a normal function parameter.
+- A field can be moved/read out during a consuming method because the method owns `self`.
+- Double references such as `&&mut String` are legal but easy to overthink; next lesson should simplify reborrowing and auto-deref.
+- Variables beginning with `_`, such as `_d`, intentionally avoid unused-variable warnings.
+
+### Review result
+Approved. The learner correctly demonstrated the consuming method receiver form.
+
+### Next concept
+Reborrowing and auto-deref with `&mut T`.
+
+## 2026-08-03 - Mutable Method Receiver Approved
+
+### Demonstrated successfully
+- Added `fn complete(&mut self)` inside `impl Quest`.
+- Made the quest vector mutable so one quest could be changed after creation.
+- Used `quests.get_mut(1)` with `if let Some(quest)` to safely borrow one mutable element from the vector.
+- Called `quest.complete()` to change that quest's status to `Status::Completed`.
+- Correctly moved the mutation before the main report so the updated status appears in later output.
+- `cargo check`, `cargo clippy`, `cargo fmt --check`, and `cargo run` all passed.
+
+### Still practicing
+- `get_mut(index)` returns `Option<&mut T>` because the index might not exist.
+- A mutable reference can call both `&mut self` methods and `&self` methods. Calling the `&self` method creates a temporary shared reborrow for that call.
+- The extra `quest.describe()` inside the `if let` block is useful for experimentation, but it prints the same quest once before the normal report.
+
+### Review result
+Approved. The learner correctly used a mutable method receiver to change one quest through a mutable borrow.
+
+### Next concept
+Method receiver `self`: consuming a value through a method.
+
 ## 2026-08-01 - Methods Returning Borrowed Data Approved
 
 ### Demonstrated successfully
