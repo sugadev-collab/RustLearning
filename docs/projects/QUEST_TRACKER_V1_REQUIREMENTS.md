@@ -4,7 +4,7 @@
 
 Build a small but real command-line Quest Tracker in stable Rust 2024. The program must preserve quests in a text file so they remain available across separate program runs.
 
-This is a learning project, not a test of memorizing APIs. The learner may use `docs/RUST_CHEAT_SHEET.md`, Rust compiler messages, and targeted standard-library documentation. The learner should still write and understand the project code rather than asking another AI to generate the whole implementation.
+This is a learning project, not a test of memorizing APIs. The learner may use `docs/reference/RUST_CHEAT_SHEET.md`, Rust compiler messages, and targeted standard-library documentation. The learner should still write and understand the project code rather than asking another AI to generate the whole implementation.
 
 ## Project Readiness
 

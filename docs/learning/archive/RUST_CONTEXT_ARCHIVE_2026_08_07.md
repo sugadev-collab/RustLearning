@@ -1,6 +1,6 @@
 # Rust Context Archive — 2026-08-07
 
-This file preserves details removed when `CURRENT_RUST_LEARNING_CONTEXT.md` was compacted from 158 lines. Do not read this archive at the start of every chat. Use it only for targeted historical lookup; `docs/LEARNING_PROGRESS.md` remains the complete exercise history.
+This file preserves details removed when `CURRENT_RUST_LEARNING_CONTEXT.md` was compacted from 158 lines. Do not read this archive at the start of every chat. Use it only for targeted historical lookup; `docs/learning/LEARNING_PROGRESS.md` remains the complete exercise history.
 
 ## Approved Checkpoint History
 
@@ -97,6 +97,6 @@ These items were demonstrated but generally not enough times to call them master
 - Ownership/borrowing foundation: about 60% toward the target level.
 - Independently reusable mastery: about 30–35%, because several concepts had only one successful demonstration.
 - Planned sequence: iterator-chain collection next, then extend or revisit the project with those concepts.
-- Stable roadmap: `docs/RUST_LEARNING_ROADMAP.md`.
-- Quest consolidation specification: `docs/QUEST_REVIEW_PROJECT.md`.
+- Stable roadmap: `docs/reference/RUST_LEARNING_ROADMAP.md`.
+- Quest consolidation specification: `docs/projects/QUEST_REVIEW_REQUIREMENTS.md`.
 - In the first chat on or after 2026-08-09, reassess readiness and remind the learner about the project-planning checkpoint before creating or updating a comprehensive real-project and AI-handoff plan.

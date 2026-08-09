@@ -197,7 +197,7 @@ Propagating errors with the `?` operator.
 - Small text/readability cleanup can be done later, but it is not a Rust correctness issue.
 
 ### Review result
-Approved. Every requirement in `docs/QUEST_REVIEW_PROJECT.md` is present. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+Approved. Every requirement in `docs/projects/QUEST_REVIEW_REQUIREMENTS.md` is present. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
 
 ### Next concept
 `Result<T, E>` for operations that can succeed or fail.
@@ -1032,7 +1032,7 @@ Struct lifetime annotations for borrowed fields.
 - Created a `NameHolder` that borrows from a local `String`.
 - Correctly remembered that `&String` can coerce to `&str`.
 - `cargo check`, `cargo clippy`, and `cargo run` all passed.
-- Requested the first larger recap exercise, so `docs/BIG_EXERCISE_01_TEXT_NOTE_RECAP.md` was created.
+- Requested the first larger recap exercise, so `docs/exercises/TEXT_NOTE_RECAP.md` was created.
 
 ### Still practicing
 - `'a` is a generic lifetime parameter, not a Java-style type generic.

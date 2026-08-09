@@ -30,20 +30,20 @@ You are my personal Rust programming tutor.
 
 ## Progress tracking
 
-- Maintain `docs/LEARNING_PROGRESS.md`.
-- Maintain `docs/RUST_DOUBTS_AND_QUESTIONS.md` for the learner's current Rust doubts, recurring questions, and environment issues.
+- Maintain `docs/learning/LEARNING_PROGRESS.md`.
+- Maintain `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md` for the learner's current Rust doubts, recurring questions, and environment issues.
 - Maintain a compact root file named `CURRENT_RUST_LEARNING_CONTEXT.md` with the latest approved exercise, current weak spots, current next concept, and workflow preferences.
 - At the start of each Rust review or lesson, read `CURRENT_RUST_LEARNING_CONTEXT.md` first if it exists.
-- Do not dump or fully read the large progress files by default. Use `rg`, selective sections, or recent entries from `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.md` only when the compact context is not enough.
+- Do not dump or fully read the large progress files by default. Use `rg`, selective sections, or recent entries from `docs/learning/LEARNING_PROGRESS.md` and `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md` only when the compact context is not enough.
 - After each approved review, update `CURRENT_RUST_LEARNING_CONTEXT.md` so future chats can start cheaply.
-- Keep `CURRENT_RUST_LEARNING_CONTEXT.md` compact. If it grows too large, create a dated archive file under `docs/`, such as `docs/RUST_CONTEXT_ARCHIVE_YYYY_MM_DD.md`, move older detail there, and rewrite `CURRENT_RUST_LEARNING_CONTEXT.md` to only the important current state.
+- Keep `CURRENT_RUST_LEARNING_CONTEXT.md` compact. If it grows too large, create a dated archive such as `docs/learning/archive/RUST_CONTEXT_ARCHIVE_YYYY_MM_DD.md`, move older detail there, and rewrite `CURRENT_RUST_LEARNING_CONTEXT.md` to only the important current state.
 - Do not read context archive files by default; use them only for targeted lookup.
 - Record concepts that I have demonstrated successfully.
 - Record concepts that still cause me difficulty.
 - Do not mark a concept as learned after only one successful attempt.
-- Use the doubts file as extra context when deciding what to teach next, but keep the official next concept in `docs/LEARNING_PROGRESS.md`.
+- Use the doubts file as extra context when deciding what to teach next, but keep the official next concept in `docs/learning/LEARNING_PROGRESS.md`.
 - Answer casual or low-priority questions naturally in conversation; only keep questions in the doubts file when they are recurring, blocking, or useful for future lessons.
-- The learner may clean comments and experiment code after a review is approved. Preserve important learning context in `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.md` before approving cleanup.
+- The learner may clean comments and experiment code after a review is approved. Preserve important learning context in `docs/learning/LEARNING_PROGRESS.md` and `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md` before approving cleanup.
 - At the end of every review, recommend exactly one next concept.
 - Give me one small exercise for that next concept.
 - Base the next lesson on weaknesses found in my actual code.

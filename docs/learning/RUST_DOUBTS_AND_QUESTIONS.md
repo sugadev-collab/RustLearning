@@ -112,7 +112,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Is Rust file reading conceptually related to Java's `FileReader`/`BufferedReader` and try-with-resources? Yes. `File` owns the OS handle, `BufReader<File>` adds buffering, and RAII closes the handle on drop. `read_to_string` is a convenience operation that opens, reads all contents, and releases its handle internally.
 
 ### Recall and reference use
-- The learner currently relies successfully on `docs/RUST_CHEAT_SHEET.md` for exact syntax and APIs, especially dereferencing, `unwrap` alternatives, and file I/O.
+- The learner currently relies successfully on `docs/reference/RUST_CHEAT_SHEET.md` for exact syntax and APIs, especially dereferencing, `unwrap` alternatives, and file I/O.
 - Reinforce that looking up API names is normal. Durable learning means recognizing the required concept and using documentation correctly, not memorizing every standard-library path.
 - Revisit explicit `*` dereferencing versus method-call auto-dereferencing and deref coercion inside project work.
 - Reinforce that `unwrap` is basic to understand but should not be used heavily in user-facing paths where missing data or I/O failures are expected.
@@ -275,7 +275,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Bigger recap exercises no longer need to wait for weekends. They may be given whenever useful, optionally saved in a separate file, and the learner can complete them later when time allows.
 - If a bigger exercise is unfinished, continue normal lessons/reviews instead of blocking progress; review the bigger exercise whenever the learner brings it back.
 - Bigger recap exercises may include one small unfamiliar concept labeled as a research challenge, so the learner can search, learn, and apply it before the review.
-- First bigger recap exercise has been created at `docs/BIG_EXERCISE_01_TEXT_NOTE_RECAP.md`; it can be completed anytime and should not block normal small lessons.
+- First bigger recap exercise has been created at `docs/exercises/TEXT_NOTE_RECAP.md`; it can be completed anytime and should not block normal small lessons.
 - Treat code comments as possible questions, doubts, or self-answers to review.
 - When the learner explains something in comments, classify it as correct, incomplete, or misleading and teach the missing part.
 - At the start of each new topic, introduce what it is, why it matters, and what to focus on.
@@ -324,7 +324,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Current estimate: about 40% of the overall path toward intermediate Rust, about 60% for the ownership/borrowing foundation, and about 30-35% for independently reusable mastery.
 - Learning has taken place across about 21 calendar days with some skipped days; do not treat this as a fixed "intermediate in 30 days" challenge.
 - Plan a consolidation big exercise for 2026-08-04 using already taught concepts. Teach `Result`, `?`, and file input carefully afterward instead of rushing them as prerequisites.
-- A stable roadmap now lives in `docs/RUST_LEARNING_ROADMAP.md`, and the current consolidation specification lives in `docs/QUEST_REVIEW_PROJECT.md`.
+- A stable roadmap now lives in `docs/reference/RUST_LEARNING_ROADMAP.md`, and the current consolidation specification lives in `docs/projects/QUEST_REVIEW_REQUIREMENTS.md`.
 - In the first chat on or after 2026-08-09, remind the learner about the project-planning checkpoint. Reassess readiness before starting the real project, then create or update a comprehensive project plan and AI handoff that a less capable assistant can follow.
 - Big-exercise preference: provide one complete requirements file, allow the learner to implement the whole attempt independently, and review at the end. Use one-by-one guidance only if the learner asks for help.
 
@@ -382,7 +382,7 @@ Questions can be answered naturally during lessons, one at a time.
 - User prefers the project root to stay clean so the code does not feel ugly or cluttered.
 - Moved larger learning documents and request notes into `docs/`.
 - Kept `CURRENT_RUST_LEARNING_CONTEXT.md` at the root so each review can still start cheaply.
-- Updated `AGENTS.md` and the compact context to point future reviews to `docs/LEARNING_PROGRESS.md` and `docs/RUST_DOUBTS_AND_QUESTIONS.md`.
+- Updated `AGENTS.md` and the compact context to point future reviews to `docs/learning/LEARNING_PROGRESS.md` and `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md`.
 
 ## 2026-07-28 - Why `Vec::from([..])` Avoids `useless_vec`
 

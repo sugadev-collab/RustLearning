@@ -154,7 +154,7 @@ Outcome: independently plan, implement, debug, test, and explain a moderately si
 
 ## 2026-08-09 Planning Checkpoint
 
-Completed on 2026-08-09. The learner reached the 55% readiness gate, and the authoritative Quest Tracker Version 1 scope plus tutor/AI handoff were created in `docs/QUEST_TRACKER_PROJECT_REQUIREMENTS.md`.
+Completed on 2026-08-09. The learner reached the 55% readiness gate, and the authoritative Quest Tracker Version 1 scope plus tutor/AI handoff were created in `docs/projects/QUEST_TRACKER_V1_REQUIREMENTS.md`.
 
 At that checkpoint:
 

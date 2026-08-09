@@ -5,9 +5,9 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 ## Reading Order
 
 - Use this file for the current state.
-- Use `docs/RUST_CHEAT_SHEET.md` only for targeted meanings and examples; do not read the whole file by default.
-- Use targeted searches in `docs/LEARNING_PROGRESS.md` or `docs/RUST_DOUBTS_AND_QUESTIONS.md` only when more detail is needed.
-- Do not read `docs/RUST_CONTEXT_ARCHIVE_2026_08_07.md` by default; it contains older checkpoint and weak-spot detail.
+- Use `docs/reference/RUST_CHEAT_SHEET.md` only for targeted meanings and examples; do not read the whole file by default.
+- Use targeted searches in `docs/learning/LEARNING_PROGRESS.md` or `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md` only when more detail is needed.
+- Do not read `docs/learning/archive/RUST_CONTEXT_ARCHIVE_2026_08_07.md` by default; it contains older checkpoint and weak-spot detail.
 
 ## Workflow Preferences
 
@@ -54,6 +54,6 @@ Begin the Quest model milestone in `quest.rs`: implement the required quest data
 - As of 2026-08-08, estimated curriculum coverage toward intermediate Rust is about 55%; independently reusable mastery remains about 35-40% because newer concepts still need repetition.
 - The 55% prerequisite gate is reached: file I/O, error propagation, command-line input, a first module, and a first unit test are approved.
 - The learner is ready to plan and begin a deliberately small Quest Tracker as a learning project. Modules and tests should be reinforced inside it rather than delayed until they are mastered separately.
-- The 2026-08-09 planning checkpoint is complete. The authoritative Version 1 scope and tutor/AI handoff are in `docs/QUEST_TRACKER_PROJECT_REQUIREMENTS.md`.
-- Stable roadmap: `docs/RUST_LEARNING_ROADMAP.md`.
-- Current completed big-exercise specification: `docs/QUEST_REVIEW_PROJECT.md`.
+- The 2026-08-09 planning checkpoint is complete. The authoritative Version 1 scope and tutor/AI handoff are in `docs/projects/QUEST_TRACKER_V1_REQUIREMENTS.md`.
+- Stable roadmap: `docs/reference/RUST_LEARNING_ROADMAP.md`.
+- Current completed big-exercise specification: `docs/projects/QUEST_REVIEW_REQUIREMENTS.md`.
