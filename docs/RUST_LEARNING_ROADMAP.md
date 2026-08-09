@@ -4,11 +4,38 @@ This is the stable roadmap for the current Rust learning path. Percentages are r
 
 ## Current Position
 
-- Date recorded: 2026-08-05
-- Overall path toward intermediate Rust: about 40%
-- Ownership and borrowing foundation: about 60% of the desired depth
-- Independently reusable mastery: about 30-35%
-- Current stage: Quest Review consolidation completed; beginning `Result<T, E>` and explicit error handling
+- Date recorded: 2026-08-08
+- Overall curriculum coverage toward intermediate Rust: about 55%
+- Ownership and borrowing foundation: about 60-65% of the desired intermediate depth
+- Independently reusable mastery: about 35-40%
+- Current stage: entering Stage 4, Reusable and Reliable Rust through the Quest Tracker
+- Current checkpoint: the 55% prerequisite gate is reached. `Result`, `?`, file I/O, iterator-based parsing, command-line input, a first module, and a first focused unit test are approved. The Quest Tracker may now begin as a learning project.
+
+## How To Read The Percentages
+
+The main percentage measures how far we have travelled through the planned curriculum, not how many Rust questions the learner could answer on an exam. Independently reusable mastery is intentionally lower because a concept needs to work in several different programs before it counts as dependable knowledge.
+
+| Percentage | Curriculum region | Practical meaning |
+|---:|---|---|
+| 0-25% | Language and memory foundations | Write small programs and reason about basic ownership and borrowing. |
+| 25-45% | Rust-style data modeling and control flow | Use structs, enums, patterns, collections, methods, and introductory iterators together. |
+| 45-55% | Errors and program boundaries | Use `Result`, `?`, files, command-line input, modules, and initial tests. Prerequisite stage completed once. |
+| 55-70% | Reusable and reliable Rust | Build a modular real project and introduce tests, traits, generics, and deliberate error design. **Current: about 55%.** |
+| 70-85% | Intermediate ownership and API design | Make stronger lifetime, smart-pointer, iterator, and abstraction decisions. |
+| 85-100% | Intermediate consolidation | Use the ecosystem carefully and complete a substantial, tested program independently. |
+
+## Major Progress Markers
+
+| Marker | Evidence expected |
+|---:|---|
+| 48% | Read and parse a text file; propagate I/O errors; begin file persistence. |
+| 50% | Save structured text reliably and report read/write failures clearly. |
+| 51% | Accept and validate a basic command-line argument without panicking. |
+| 53% | Separate file persistence into a module with deliberate visibility. |
+| 55% (current) | Use command-line input, basic modules, and focused tests; decide the first Quest Tracker scope. |
+| 70% | Maintain a working modular Quest Tracker while using traits, generics, tests, and better errors where motivated. |
+| 85% | Explain and apply intermediate ownership and API-design choices in project code. |
+| 100% | Plan, implement, debug, test, and explain a moderately sized Rust program with sensible tradeoffs. |
 
 ## Learning Principles
 
@@ -56,7 +83,9 @@ Main topics:
 - Command-line arguments and input validation
 - Separating a program into initial modules
 
-Milestone: after `Result`, `?`, and basic file handling are understood through exercises, begin the first real project.
+Status: prerequisite stage completed once. These concepts remain active practice areas and will recur inside the Quest Tracker.
+
+Milestone: after these boundary concepts are understood through exercises, decide the first real-project scope.
 
 ## First Real Project Marker (about 50-55%)
 
@@ -117,15 +146,15 @@ Outcome: independently plan, implement, debug, test, and explain a moderately si
 
 ## Flexible Near-Term Sequence
 
-1. Learn `Result<T, E>` carefully.
-2. Practice the `?` operator and error propagation.
-3. Learn basic file input/output.
-4. Introduce modules and focused testing.
-5. Decide whether the Quest Tracker is ready to begin.
+1. **About 48-50%:** finish file output, truncation/overwrite behavior, and explicit I/O error reporting.
+2. **About 50-51%:** accept and validate basic command-line arguments.
+3. **About 51-53%:** separate the program into small modules with clear visibility.
+4. **About 53-55%:** add focused unit tests and reassess weak spots.
+5. **At the 55% gate:** choose a realistic first Quest Tracker version and prepare its detailed implementation plan.
 
-## 2026-10-09 Planning Checkpoint
+## 2026-08-09 Planning Checkpoint
 
-In the first chat on 2026-10-09, remind the learner about the planned project checkpoint. If there is no chat that day, give the reminder in the first later chat. The learner may or may not be ready to start; readiness matters more than the date.
+In the first chat on or after 2026-08-09, remind the learner about the planned project checkpoint. The learner may or may not be ready to start; readiness matters more than the date.
 
 At that checkpoint:
 

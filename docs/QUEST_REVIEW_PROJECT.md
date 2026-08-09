@@ -125,4 +125,4 @@ The program is complete when:
 
 ## Relationship to the Real Project
 
-Quest Review stores everything in memory and rehearses the core data model. The later Quest Tracker will add `Result`, `?`, file persistence, command-line interaction, modules, and tests. Its detailed plan should be created or finalized at the 2026-10-09 planning checkpoint after checking the learner's actual readiness.
+Quest Review stores everything in memory and rehearses the core data model. The later Quest Tracker will add `Result`, `?`, file persistence, command-line interaction, modules, and tests. Its detailed plan should be created or finalized at the 2026-08-09 planning checkpoint after checking the learner's actual readiness.

@@ -1,116 +1,56 @@
-#[derive(PartialEq)]
-enum QuestStatus {
-    Planned,
-    Active,
-    Completed,
-}
-struct Quest {
-    title: String,
-    reward_xp: u32,
-    status: QuestStatus,
-    note: Option<String>,
-}
-impl Quest {
-    fn new(title: String, reward_xp: u32, note: Option<String>) -> Self {
-        Self {
-            title,
-            reward_xp,
-            status: QuestStatus::Planned,
-            note,
-        }
-    }
-
-    fn title(&self) -> &str {
-        &self.title
-    }
-
-    fn active(&mut self) {
-        self.status = QuestStatus::Active;
-    }
-    fn complete(&mut self) {
-        self.status = QuestStatus::Completed;
-    }
-    fn _change_status(&mut self, status: QuestStatus) {
-        self.status = status
-    }
-    fn into_reward_xp(self) -> u32 {
-        println!("Consuming the quest...");
-        self.reward_xp
-    }
-
-    fn print_note(&self) {
-        if let Some(note) = &self.note {
-            println!("Note: {}", note);
-        }
-    }
-    fn print_status(&self) {
-        match self.status {
-            QuestStatus::Planned => println!("Will start soon."),
-            QuestStatus::Active => println!("Ongoing."),
-            QuestStatus::Completed => println!("done."),
-        }
-    }
+mod storage;
+fn _first_title(titles: &[String]) -> Option<&str> {
+    let first = titles.first()?;
+    Some(&first[..])
 }
 
-fn sum_of_completed_xp(quests: &[Quest]) -> u32 {
-    quests
-        .iter()
-        .filter(|quest| quest.status == QuestStatus::Completed)
-        .map(|quest| quest.reward_xp)
-        .sum::<u32>()
+fn _load_quest_titles(path: &str) -> Result<Vec<String>, std::io::Error> {
+    let titles = std::fs::read_to_string(path)?;
+
+    let titles_vec = titles
+        .lines()
+        .map(|title| title.trim())
+        .filter(|title| !title.is_empty())
+        .map(|title| title.to_string())
+        .collect();
+    Ok(titles_vec)
 }
 
 fn main() {
-    let mut quests = vec![
-        Quest::new(
-            "Making Chatgpt From scratch".to_string(),
-            1000_u32,
-            Option::Some("Be careful and dont make mistake".to_string()),
-        ),
-        Quest::new(
-            "Train Chat gpt".to_string(),
-            100_000_000_u32,
-            Some("Be nice with electricity bill".to_string()),
-        ),
-        Quest::new(
-            "Ordering and Reciving Flood of Ram supply".to_string(),
-            1000_u32,
-            Some("HBM memories are importent Not DDR5".to_string()),
-        ),
-        Quest::new("Make Nvidia Grate again".to_string(), 100_000_000_u32, None),
+    // if let Ok(current_dir) = std::env::current_dir() {
+    //     println!("Path: {:?}", current_dir)
+    // }
+    // let path = "data/quests.txt";
+    // match load_quest_titles(path) {
+    //     Ok(titles) => {
+    //         for title in &titles {
+    //             println!("{}", title)
+    //         }
+    //         println!();
+    //         println!("First title .....");
+    //         let first = first_title(&titles).unwrap_or("Nothing Exists....");
+    //         println!("{}", first)
+    //     }
+    //     Err(error) => println!("Error: {}", error),
+    // }
+
+    let titles = vec![
+        "Chat Gpt".to_string(),
+        "Chad Gpt".to_string(),
+        "Rust Gpt".to_string(),
+        "Gpt Chat".to_string(),
     ];
 
-    if let Some(quest) = quests.get_mut(2) {
-        quest.active();
-        quest.complete();
-        quest.print_note();
-        println!()
-    }
-    println!();
-    quests.iter().for_each(|quest| {
-        println!("Title: {}", quest.title());
-        quest.print_status();
-    });
-
-    let sum = sum_of_completed_xp(&quests);
-
-    println!("Sum of completed XP: {}Xp", sum);
-
-    println!("proof that the quests are only borrowed..");
-
-    for quest in quests.iter() {
-        println!("Title: {}", quest.title)
-    }
-
-    let consuming_quest = Quest::new(
-        "Chad gpt is comming".to_string(),
-        1_000_000_000_u32,
-        Some("Wait for it...".to_string()),
-    );
-
-    println!(
-        "Consumed Quest but xp is here: {}xp",
-        consuming_quest.into_reward_xp()
-    );
-    // println!("This not gonna work: {}", consuming_quest.title)
+    match std::env::args().nth(1) {
+        Some(path) => {
+            println!("Writing.... on path: '{}'", path);
+            let result = storage::save_quest_titles(&path, &titles);
+            let message = match result {
+                Ok(()) => "Sucess.",
+                Err(er) => &er.to_string(),
+            };
+            println!("Result: {} ", message);
+        }
+        None => println!("Couldn't recive a file path to write."),
+    };
 }

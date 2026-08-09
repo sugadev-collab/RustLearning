@@ -1,5 +1,186 @@
 # Learning Progress
 
+# 2026-08-08 - First Focused Unit Test Approved
+
+### Demonstrated successfully
+- Extracted file-content formatting into a private pure helper and kept the public save function using it.
+- Placed tests in a `#[cfg(test)]` child module inside `storage.rs`.
+- Used `super::format_quest_titles` to access the private helper in the parent `storage` module.
+- Marked a test with `#[test]` and verified actual output with `assert_eq!`.
+- Corrected the earlier mistake of putting `use super::...` in the crate root and attaching `#[cfg(test)]` directly to production functionality.
+
+### Still practicing
+- The learner adapted an external example successfully but does not yet understand `mod`, `super`, or `assert_eq!` deeply; reinforce them in the Quest Tracker before treating tests or module paths as mastered.
+- Test names should become more behavior-specific as the project grows.
+- Add edge cases only when they clarify real project behavior rather than collecting tests mechanically.
+
+### Review result
+Approved. One unit test passed. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and the normal argument-supplied program run also passed.
+
+### Next concept
+Project decomposition: assigning model, storage, and command-line responsibilities to clear modules.
+
+# 2026-08-08 - First Source Module Approved
+
+### Demonstrated successfully
+- Created `src/storage.rs` and declared it from the crate root with `mod storage;`.
+- Moved the file-save helper into the storage module without changing its behavior.
+- Used `pub fn` to make the helper visible to its parent module.
+- Called the helper through the explicit module path `storage::save_quest_titles(...)`.
+- Preserved the owned command-line path and borrowed title slice across the module boundary.
+- Added the new source file to Git tracking without staging unrelated working-tree changes.
+
+### Still practicing
+- Module declarations, module paths, and visibility have been demonstrated once and should recur naturally in the Quest Tracker.
+- Keep distinguishing a private module declaration from a public item inside that module.
+- Project code still needs focused tests before the full Quest Tracker readiness gate.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and both runtime argument cases passed.
+
+### Next concept
+Focused unit tests with `#[cfg(test)]`, `#[test]`, and `assert_eq!`.
+
+# 2026-08-08 - Command-Line Output Path Approved
+
+### Demonstrated successfully
+- Used `std::env::args().nth(1)` to request the first user-supplied command-line argument.
+- Matched the resulting `Option<String>` without panicking.
+- Kept ownership of the path `String` in the `Some(path)` arm and borrowed it as `&str` for the save helper.
+- Gave the missing-argument case separate behavior instead of assuming an argument existed.
+- Successfully tested both an argument-supplied run and a missing-argument run.
+
+### Still practicing
+- Exact standard-library API names may still require the cheat sheet or documentation; that is normal while the underlying `Option`, ownership, and error-handling concepts become durable.
+- Explicit dereferencing, deref coercion, and method-call auto-dereferencing need recurring examples so they are not treated as the same mechanism.
+- Avoid building a habit of `unwrap` in user-facing project code; prefer `match`, `?`, fallbacks, or deliberate validation depending on the situation.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, and `cargo fmt --check` passed. `cargo run --quiet -- data/quests_copy.txt` saved successfully, and `cargo run --quiet` reported the missing path without panicking.
+
+### Next concept
+Basic Rust modules, `mod`, and visibility with `pub`.
+
+# 2026-08-08 - Text File Writing Approved
+
+### Demonstrated successfully
+- Wrote a helper accepting a borrowed `&[String]` and returning `Result<(), std::io::Error>`.
+- Used `titles.join("\n")` to build the complete file contents before writing.
+- Used `std::fs::write(path, joined)?` to overwrite the destination and propagate I/O failure.
+- Returned `Ok(())`, correctly using the unit type because a successful write has no additional value to return.
+- Handled the returned `Result` with distinct `Ok(())` and `Err(error)` match arms.
+- Investigated why calling `std::fs::write` inside a loop retained only the final title: every call truncated and replaced the file.
+
+### Still practicing
+- `Result`, `?`, and I/O errors are improving but should recur in the real project before being considered independently mastered.
+- Returning a borrowed reference to a temporary error string compiled in this example, but branch-local printing or an owned `String` will usually make the lifetime and ownership clearer.
+- File overwrite behavior is understood once; append mode and structured persistence can be introduced only when the project needs them.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed, and `data/quests_copy.txt` contained all four expected titles.
+
+### Next concept
+Command-line arguments with `std::env::args` and `Option`-based input validation.
+
+# 2026-08-07 - Iterator-Chain File Parsing Approved
+
+### Demonstrated successfully
+- Refactored `load_quest_titles` from a manual `Vec` and `for` loop into a lazy iterator chain.
+- Used `.lines()` to yield borrowed `&str` items and `.map(...)` to trim them without allocating.
+- Used `.filter(...)` before converting retained titles into owned `String` values.
+- Used `.collect()` with the function's `Vec<String>` return type supplying the required type context.
+- Corrected the first attempt, which allocated a `String` before filtering, so empty lines no longer allocate unnecessarily.
+
+### Still practicing
+- Iterator item types and adapter closure parameter types need repetition, especially that `filter` borrows each iterator item for its predicate.
+- `map`, `filter`, and `collect` have now been used successfully in several focused examples, but should continue recurring in file and project work before being considered independently mastered.
+- `Option`, `Result`, and `?` should continue recurring in the next file-output exercise.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+Writing text files with `std::fs::write` and propagating I/O errors.
+
+# 2026-08-07 - Project-Relative File Path Approved
+
+### Demonstrated successfully
+- Replaced the absolute file path with the project-relative path `data/quests.txt`.
+- Printed `std::env::current_dir()` to observe that `cargo run` executes from the project root.
+- Kept `load_quest_titles(...)`, `first_title(...)`, and the `match`-based file error handling working with the relative path.
+
+### Still practicing
+- `current_dir()` returns a `Result`, and the current `if let Ok(...)` handles only the success path. That is fine for a debug print, but future user-facing code should decide what to do on failure.
+- Keep distinguishing paths relative to Cargo's working directory from paths relative to `src/`.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+Iterator-chain collection with `map`, `filter`, and `collect`.
+
+# 2026-08-07 - File Reading And `Option` Question Mark Approved
+
+### Demonstrated successfully
+- Created `data/quests.txt` with one quest title per line.
+- Wrote `load_quest_titles(path: &str) -> Result<Vec<String>, std::io::Error>`.
+- Used `std::fs::read_to_string(path)?` to propagate file read errors.
+- Parsed file contents with `.lines()`, trimmed each line, skipped empty lines, and collected owned `String` values.
+- Wrote `first_title(titles: &[String]) -> Option<&str>` using `titles.first()?`.
+- Used `.unwrap_or(...)` to provide a fallback for `None`.
+- Cleaned old unused Quest demo code so the current exercise is focused and Clippy-clean.
+
+### Still practicing
+- `?` has now been used once with `Result` and once with `Option`; keep reinforcing that it returns early with `Err(...)` or `None`.
+- File paths are currently absolute; later exercises should prefer project-relative paths where possible.
+- Iterator collection was implemented with a clear loop; later revisit the iterator-chain version after file I/O feels comfortable.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+Project-relative file paths and `std::env::current_dir`.
+
+# 2026-08-06 - `?` Error Propagation Exercise Approved
+
+### Demonstrated successfully
+- Added `reward_message(quest: &Quest) -> Result<String, String>`.
+- Used `quest.claim_reward()?` to continue with XP on `Ok(...)` and return early on `Err(...)`.
+- Built a success message after the `?` operator, proving that code after `?` only runs on the success path.
+- Called `reward_message(...)` for every quest by iterating over `&quests`.
+- Handled each returned `Result<String, String>` with one `match`.
+
+### Still practicing
+- `?` has now been demonstrated once; keep reinforcing that it is early error return, not a ternary operator.
+- The current `match` stores either success or error text in a single `message` variable, which is valid; later exercises can make success and failure branches more visibly different.
+- Continue keeping `Result`-returning helper functions small and easy to reason about.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+Basic file reading with `std::fs::read_to_string`.
+
+# 2026-08-06 - First `Result<T, E>` Reward Exercise Approved
+
+### Demonstrated successfully
+- Added `Quest::claim_reward(&self) -> Result<u32, String>`.
+- Returned `Ok(self.reward_xp)` only when the quest status is `Completed`.
+- Returned separate `Err(String)` messages for `Planned` and `Active`, showing that `Result` can explain different failure reasons.
+- Updated the reward report to call `claim_reward()` once per quest and handle the returned `Result` with `match`.
+- Demonstrated `Planned`, `Active`, and `Completed` statuses in the runtime output.
+
+### Still practicing
+- `Result<T, E>` has been demonstrated once; keep reinforcing when to return `Ok`, when to return `Err`, and how error messages represent the reason an operation failed.
+- Small output polish remains separate from Rust correctness, such as leading spaces in messages and spelling in printed text.
+- Continue preferring one evaluation plus `match` when the program needs both success and error handling.
+
+### Review result
+Approved. `cargo check`, `cargo clippy -- -D warnings`, `cargo fmt --check`, and `cargo run --quiet` all passed.
+
+### Next concept
+Propagating errors with the `?` operator.
+
 # 2026-08-05 - Quest Review Consolidation Approved
 
 ### Demonstrated successfully

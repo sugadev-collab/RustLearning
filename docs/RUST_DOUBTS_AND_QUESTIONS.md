@@ -106,6 +106,23 @@ Questions can be answered naturally during lessons, one at a time.
 - What happens when zipped iterators have different lengths?
 - In `.iter().filter(|num| ...)`, why can the closure parameter behave like `&&i32`?
 
+### File I/O
+- Why did calling `std::fs::write` once per title leave only the final title? `write` creates or truncates the destination before each write, so every loop iteration replaced the preceding contents.
+- Does `std::fs::write(path, complete_text)` delete the old contents and rewrite the file? Yes: if the file exists, its previous contents are truncated and the supplied bytes become its new contents.
+- Is Rust file reading conceptually related to Java's `FileReader`/`BufferedReader` and try-with-resources? Yes. `File` owns the OS handle, `BufReader<File>` adds buffering, and RAII closes the handle on drop. `read_to_string` is a convenience operation that opens, reads all contents, and releases its handle internally.
+
+### Recall and reference use
+- The learner currently relies successfully on `docs/RUST_CHEAT_SHEET.md` for exact syntax and APIs, especially dereferencing, `unwrap` alternatives, and file I/O.
+- Reinforce that looking up API names is normal. Durable learning means recognizing the required concept and using documentation correctly, not memorizing every standard-library path.
+- Revisit explicit `*` dereferencing versus method-call auto-dereferencing and deref coercion inside project work.
+- Reinforce that `unwrap` is basic to understand but should not be used heavily in user-facing paths where missing data or I/O failures are expected.
+
+### Modules and unit tests
+- The learner used an external unit-test example to implement a passing Rust test but does not yet understand `mod`, `super`, or `assert_eq!` deeply.
+- `mod tests` creates a child module; inside it, `super` refers to the parent module (`storage` in the current exercise).
+- `assert_eq!(actual, expected)` is conceptually similar to equality assertions used in JUnit, but it is a Rust macro and prints both values when the assertion fails.
+- Reinforce these through real Quest Tracker tests rather than treating one passing example as mastery.
+
 ### Operators
 - Give a short Rust refresher on common operators and bitwise operators, focusing only on Rust-specific differences from languages already known.
 
@@ -308,7 +325,7 @@ Questions can be answered naturally during lessons, one at a time.
 - Learning has taken place across about 21 calendar days with some skipped days; do not treat this as a fixed "intermediate in 30 days" challenge.
 - Plan a consolidation big exercise for 2026-08-04 using already taught concepts. Teach `Result`, `?`, and file input carefully afterward instead of rushing them as prerequisites.
 - A stable roadmap now lives in `docs/RUST_LEARNING_ROADMAP.md`, and the current consolidation specification lives in `docs/QUEST_REVIEW_PROJECT.md`.
-- In the first chat on 2026-10-09, remind the learner about the project-planning checkpoint; if there is no chat that day, remind them in the first later chat. Reassess readiness before starting the real project, then create or update a comprehensive project plan and AI handoff that a less capable assistant can follow.
+- In the first chat on or after 2026-08-09, remind the learner about the project-planning checkpoint. Reassess readiness before starting the real project, then create or update a comprehensive project plan and AI handoff that a less capable assistant can follow.
 - Big-exercise preference: provide one complete requirements file, allow the learner to implement the whole attempt independently, and review at the end. Use one-by-one guidance only if the learner asks for help.
 
 ## 2026-08-03 - Must `self` Be the First Parameter?
