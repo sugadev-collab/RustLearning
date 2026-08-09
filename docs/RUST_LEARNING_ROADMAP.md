@@ -164,4 +164,4 @@ At that checkpoint:
 - Create or update a comprehensive project plan and AI handoff document that a less capable assistant can follow without changing the learning pace.
 - Make the handoff explicit about completed knowledge, weak spots, teaching rules, project scope, milestones, file layout, tests, and prohibited shortcuts.
 
-The next action is the learner's compact structural plan. After review, the learner may implement the complete Version 1 independently and request small hints only when blocked.
+The learner will use brief source comments and an evolving file structure instead of a formal planning document. The complete requirements remain authoritative but may be read milestone by milestone. The learner may implement Version 1 independently and request small hints only when blocked.

@@ -17,6 +17,8 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - After an approved exercise, update progress, this compact context, and the cheat sheet when useful new syntax or APIs were introduced.
 - Keep this file small; archive older detail under `docs/` when it begins growing again.
 - For big exercises, provide the complete requirements file upfront and let the learner make a full independent attempt.
+- For the Quest Tracker, treat brief source-file comments and the evolving file structure as the learner's plan; do not require a polished separate planning document.
+- The learner prefers reading the complete requirements progressively by milestone, implementing important foundations first, and revising the structure when the code reveals a need.
 - Prefer durable understanding over rushing toward a fixed deadline.
 - Small Git commits are allowed when useful; never stage generated build artifacts.
 
@@ -45,7 +47,7 @@ Project decomposition: assigning model, storage, and command-line responsibiliti
 
 ## Next Small Exercise
 
-Read `docs/QUEST_TRACKER_PROJECT_REQUIREMENTS.md` and submit the seven-item structural planning response listed under “What The Learner Must Do Next.” Do not invent additional product requirements or begin implementation before that compact plan is reviewed.
+Begin the Quest model milestone in `quest.rs`: implement the required quest data, status enum, constructor, read access, and valid/invalid state transitions. Read the corresponding requirements section before implementing it, then continue through later milestones independently or ask for a small hint when blocked.
 
 ## Roadmap Notes
 

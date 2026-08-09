@@ -241,10 +241,10 @@ The complete requirements are provided now. The learner may implement the whole 
 
 ### Milestone 1: Structural plan
 
-- State the responsibility of the crate root, model module, and storage module in one sentence each.
-- List the planned source files.
-- Describe the data flow for one mutating command from arguments through loading, validation, mutation, saving, and output.
-- List the order in which the remaining milestones will be implemented.
+- Keep a brief evolving structure in source-file comments or a separate note, whichever feels more natural.
+- Identify the responsibility of the crate root, model module, and storage module briefly.
+- Adjust filenames or add a module later when implementation reveals a clear need.
+- A polished up-front planning document is not required.
 
 ### Milestone 2: Quest model
 
@@ -306,17 +306,11 @@ These may become later project iterations when they serve a specific learning go
 
 ## What The Learner Must Do Next
 
-Do not invent new requirements and do not begin by writing code randomly. Read this file once, then submit a compact structural plan containing:
+Use this file as the authoritative Version 1 checklist, but it may be read progressively. Before starting each milestone, read that milestone and the relevant requirement sections, then implement it in the learner's own style.
 
-1. One sentence for the crate root responsibility.
-2. One sentence for the quest/model module responsibility.
-3. One sentence for the storage module responsibility.
-4. The planned source filenames.
-5. A short arrow-style data flow for the `start` command.
-6. The planned implementation milestone order.
-7. Any requirement that is unclear or seems too difficult.
+Begin with the Quest model milestone. Continue through storage, persistence, commands, and final verification independently. Brief source comments and the evolving file layout are sufficient planning; no separate formal plan approval is required.
 
-After that plan is reviewed, the learner may implement the complete Version 1 independently and return for a final review, asking for small hints only when genuinely blocked.
+Return for a complete review after the independent attempt, or ask for a small hint when genuinely blocked. Do not add deferred Version 1 features without first checking whether they complicate the required behavior.
 
 ## Tutor And AI Handoff Rules
 
