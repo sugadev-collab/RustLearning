@@ -154,7 +154,7 @@ Outcome: independently plan, implement, debug, test, and explain a moderately si
 
 ## 2026-08-09 Planning Checkpoint
 
-In the first chat on or after 2026-08-09, remind the learner about the planned project checkpoint. The learner may or may not be ready to start; readiness matters more than the date.
+Completed on 2026-08-09. The learner reached the 55% readiness gate, and the authoritative Quest Tracker Version 1 scope plus tutor/AI handoff were created in `docs/QUEST_TRACKER_PROJECT_REQUIREMENTS.md`.
 
 At that checkpoint:
 
@@ -164,4 +164,4 @@ At that checkpoint:
 - Create or update a comprehensive project plan and AI handoff document that a less capable assistant can follow without changing the learning pace.
 - Make the handoff explicit about completed knowledge, weak spots, teaching rules, project scope, milestones, file layout, tests, and prohibited shortcuts.
 
-An AI cannot send a timed notification by itself in an inactive chat. This dated instruction is recorded so any future tutor that reads the repository context can remind the learner during a session on or after the checkpoint date.
+The next action is the learner's compact structural plan. After review, the learner may implement the complete Version 1 independently and request small hints only when blocked.

@@ -45,13 +45,13 @@ Project decomposition: assigning model, storage, and command-line responsibiliti
 
 ## Next Small Exercise
 
-At the project-planning session, after receiving the complete Quest Tracker specification, write one sentence for each of these responsibilities before coding: quest data/model, file storage, and command-line coordination. Use that three-line map to check that each planned module has one clear job.
+Read `docs/QUEST_TRACKER_PROJECT_REQUIREMENTS.md` and submit the seven-item structural planning response listed under “What The Learner Must Do Next.” Do not invent additional product requirements or begin implementation before that compact plan is reviewed.
 
 ## Roadmap Notes
 
 - As of 2026-08-08, estimated curriculum coverage toward intermediate Rust is about 55%; independently reusable mastery remains about 35-40% because newer concepts still need repetition.
 - The 55% prerequisite gate is reached: file I/O, error propagation, command-line input, a first module, and a first unit test are approved.
 - The learner is ready to plan and begin a deliberately small Quest Tracker as a learning project. Modules and tests should be reinforced inside it rather than delayed until they are mastered separately.
+- The 2026-08-09 planning checkpoint is complete. The authoritative Version 1 scope and tutor/AI handoff are in `docs/QUEST_TRACKER_PROJECT_REQUIREMENTS.md`.
 - Stable roadmap: `docs/RUST_LEARNING_ROADMAP.md`.
 - Current completed big-exercise specification: `docs/QUEST_REVIEW_PROJECT.md`.
-- In the first chat on or after 2026-08-09, reassess readiness and remind the learner about the project-planning checkpoint before preparing a real-project and AI-handoff plan.
