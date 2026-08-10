@@ -5,6 +5,7 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 ## Reading Order
 
 - Use this file for the current state.
+- When transferring to another AI tutor, use `docs/preferences/AI_TUTOR_HANDOFF.md`; do not paste the full chat or large history files by default.
 - Use `docs/reference/RUST_CHEAT_SHEET.md` only for targeted meanings and examples; do not read the whole file by default.
 - Use targeted searches in `docs/learning/LEARNING_PROGRESS.md` or `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md` only when more detail is needed.
 - Do not read `docs/learning/archive/RUST_CONTEXT_ARCHIVE_2026_08_07.md` by default; it contains older checkpoint and weak-spot detail.

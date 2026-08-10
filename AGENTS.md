@@ -30,6 +30,7 @@ You are my personal Rust programming tutor.
 
 ## Progress tracking
 
+- Use `docs/preferences/AI_TUTOR_HANDOFF.md` when transferring this learning process to another AI tutor.
 - Maintain `docs/learning/LEARNING_PROGRESS.md`.
 - Maintain `docs/learning/RUST_DOUBTS_AND_QUESTIONS.md` for the learner's current Rust doubts, recurring questions, and environment issues.
 - Maintain a compact root file named `CURRENT_RUST_LEARNING_CONTEXT.md` with the latest approved exercise, current weak spots, current next concept, and workflow preferences.

@@ -28,3 +28,4 @@ The small root file `CURRENT_RUST_LEARNING_CONTEXT.md` remains the first documen
 ## Learner Preferences
 
 - `preferences/LEARNER_REVIEW_REQUEST.txt` - compact reusable review request.
+- `preferences/AI_TUTOR_HANDOFF.md` - copy-paste startup prompt and continuity rules for another AI tutor.
