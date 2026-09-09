@@ -1,3 +1,5 @@
+use std::env::Args;
+
 use crate::quest::Quest;
 
 mod messages;
@@ -12,33 +14,39 @@ enum Commands {
     Complete(String),
     Summary,
 }
-fn command_identify(command: String) -> Result<Commands, String> {
-    let command = command.trim();
-    if "help".eq(command) {
+fn command_identify(arg: &mut Args) -> Result<Commands, String> {
+    let command = match arg.nth(1) {
+        Some(commnad) => commnad,
+        None => "".to_string(),
+    };
+    if "help".eq(&command) {
         return Ok(Commands::Help);
-    } else if "list".eq(command) {
+    } else if "list".eq(&command) {
         return Ok(Commands::List);
-    } else if "summary".eq(command) {
+    } else if "summary".eq(&command) {
         return Ok(Commands::Summary);
     } else if command.starts_with("start") {
-        let st = command.split(" ").collect::<Vec<&str>>();
+        let st = arg.nth(2);
 
-        return match st.get(1) {
+        return match st {
             Some(quest_no) => Ok(Commands::Start(quest_no.to_string())),
             None => Err("After 'start' command a quest no is expected.".to_string()),
         };
     } else if command.starts_with("complete") {
-        let st = command.split(" ").collect::<Vec<&str>>();
+        let st = arg.nth(2);
 
-        return match st.get(1) {
+        return match st {
             Some(quest_no) => Ok(Commands::Complete(quest_no.to_string())),
             None => Err("After 'complete' command a quest no is expected.".to_string()),
         };
     } else if command.starts_with("add") {
-        let tokens = command
-            .split('"')
-            .map(|token| token.trim())
-            .collect::<Vec<&str>>();
+        let tokens: Vec<String> = arg
+            .into_iter()
+            .enumerate()
+            .map(|(i, token)| if i != 0 && i != 1 { Some(token) } else { None })
+            .filter(|token_op| !token_op.is_none())
+            .map(|token_op| token_op.unwrap_or_default())
+            .collect();
 
         let title = match tokens.get(1) {
             Some(title) => title,
@@ -202,15 +210,9 @@ fn execute_command(command: Commands) {
 }
 
 fn main() {
-    let command = match std::env::args().nth(1) {
-        Some(command) => command,
-        None => {
-            println!("Command not exists.");
-            return;
-        }
-    };
+    let mut command = std::env::args();
 
-    let identified_command = match command_identify(command) {
+    let identified_command = match command_identify(&mut command) {
         Ok(command) => command,
         Err(e) => {
             println!("Error: {}", e);
