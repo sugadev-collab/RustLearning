@@ -210,15 +210,33 @@ fn execute_command(command: Commands) {
 }
 
 fn main() {
-    let mut command = std::env::args();
+    // let mut command = std::env::args();
 
-    let identified_command = match command_identify(&mut command) {
-        Ok(command) => command,
-        Err(e) => {
-            println!("Error: {}", e);
-            return;
-        }
-    };
+    // let identified_command = match command_identify(&mut command) {
+    //     Ok(command) => command,
+    //     Err(e) => {
+    //         println!("Error: {}", e);
+    //         return;
+    //     }
+    // };
 
-    execute_command(identified_command);
+    // execute_command(identified_command);
+
+    /// Temprory call
+    practice_module();
+}
+
+use crate::quest::Status;
+//Temp
+fn practice_module() {
+    let _quest = Quest::new(
+        String::from("This is reinforcement learning"),
+        1000000000_u32,
+        Some(String::from("I can do it")),
+        Status::Active,
+    );
+
+    let status = quest::status_to_string(_quest.status());
+    println!("Quest title: {}", _quest.title());
+    println!("Quest Status: {}", status)
 }
