@@ -23,13 +23,18 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - Prefer durable understanding over rushing toward a fixed deadline.
 - Small Git commits are allowed when useful; never stage generated build artifacts.
 
-## Latest Approved Exercise - 2026-08-08
+## Latest Approved Exercise - 2026-10-24
 
-- Extracted a private pure formatter used by the public save helper.
-- Added a `#[cfg(test)]` child module, imported the parent helper with `super::...`, and verified two-title formatting with `#[test]` plus `assert_eq!`.
-- One test, check, formatting, strict Clippy, and the normal program run passed.
+- The learner independently practiced a `Quest` constructor, `Status` enum, getter and sibling-module function from `main.rs`, and explained `mod`, `pub`, `use`, `crate::`, `super::`, method-call dot syntax and module/type paths.
+- The learner corrected the original `list() -> Option<Vec<Quest>>` implicit-return bug. Latest learner source commit checked: `7e2a6da` ("list fn defect fixed", 2026-10-24).
+- Explained final-expression/semicolon semantics and `filter_map`'s `Some` extraction. Demonstrated conceptual understanding; do not interpret this as full iterator mastery or full project approval.
+- The code was reviewed from GitHub; no local `cargo check`, tests, or runtime verification was performed by the tutor for this checkpoint.
 
 ## Active Weak Spots
+
+- Current `list()` prints validation/parse errors then drops malformed records through `filter_map`; if `start`/`complete` later writes the reduced vector, it can erase stored records. User prefers reporting bad entries and continuing when safe; agree on a safe write policy before changing project behavior. Version 1 requirements currently mandate line-aware errors and no destructive invalid writes.
+- `Result` vs `Option`, converting via `.ok()`, and collecting `Result<Vec<_>, E>` need deliberate practice.
+- Other project bugs remain outside the approved return-value fix (absolute read vs relative write paths; argument iteration; add command replacing the file).
 
 - Iterator chains and their item/reference types need reinforcement, especially `map`, `filter`, and `collect`.
 - `Option`, `Result`, and `?` are understood at an introductory level but need more independent repetition.
@@ -44,13 +49,16 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Project decomposition: assigning model, storage, and command-line responsibilities to clear modules.
+Preserving and propagating `Result` errors while processing collections, especially `map` and `collect::<Result<Vec<_>, _>>()`; compare this with `filter_map` and deliberate log-and-skip read-only policies.
 
 ## Next Small Exercise
 
-Begin the Quest model milestone in `quest.rs`: implement the required quest data, status enum, constructor, read access, and valid/invalid state transitions. Read the corresponding requirements section before implementing it, then continue through later milestones independently or ask for a small hint when blocked.
+In a small isolated practice function (not a Quest Tracker rewrite), collect `Vec<Result<i32, &str>>` using `.into_iter().collect::<Result<Vec<i32>, &str>>()`; compare inputs with all `Ok` versus one `Err`. Explain why a mutating command needs a reliable loading result.
 
 ## Roadmap Notes
+
+- 2026-10-24 reinforcement checkpoint: keep the historical August estimate (~55% curriculum coverage, ~35-40% durable mastery) as historical, not a new verified assessment. No percentage advancement has been assigned.
+- Axum goal: after stronger modules/borrowing/error flow, begin small Axum handlers and Tokio async basics in parallel with fundamentals; traits/generics, tests, shared state, and data persistence follow progressively.
 
 - As of 2026-08-08, estimated curriculum coverage toward intermediate Rust is about 55%; independently reusable mastery remains about 35-40% because newer concepts still need repetition.
 - The 55% prerequisite gate is reached: file I/O, error propagation, command-line input, a first module, and a first unit test are approved.
