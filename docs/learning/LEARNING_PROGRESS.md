@@ -1,5 +1,28 @@
 # Learning Progress
 
+# 2026-10-24 - Modules And Implicit Return Reinforcement Approved
+
+### Demonstrated successfully
+- Read existing cross-module `Quest` code and wrote an independent temporary practice function using `Quest::new`, `Status::Active`, getters, and `quest::status_to_string`.
+- Explained the practical distinction between `mod`, `pub`, `use`, `crate::`, and `super::`, with additional questions on nested file/module layout.
+- Understood that a final `match` expression can supply a function return value without `return`; fixed `list() -> Option<Vec<Quest>>` so successful reads return `Some(quests)` and read errors return `None`.
+- Commit reviewed: `7e2a6da` ("list fn defect fixed"). The fix to the return expression is approved; entire Quest Tracker Version 1 is not yet approved.
+
+### Still practicing
+- `filter_map` extracts `Some` values from the closure and skips `None`; it does not automatically unwrap `Result::Ok`. Conversion via `.ok()` or explicit matches is deliberate, and can discard errors.
+- Learner prefers logging malformed quests and allowing read-only display to proceed where sensible. Safe persistence requires preventing `start` or `complete` from overwriting missing/skipped records; Version 1 requirements call for line-aware errors and preservation of original data on invalid input.
+- Known remaining defects: mismatched absolute/relative data path, problematic `Args::nth` usage, `add` overwriting earlier quests, and risk of saving a filtered partial load.
+- No local Cargo checks, tests, or program execution were run by the reviewing tutor; review was of committed GitHub source.
+
+### Review result
+Approved the focused module refresher and the `list()` return-value fix only. Keep learner-owned source untouched unless the learner explicitly requests edits.
+
+### Next concept
+Error-preserving iteration using `Result`: compare `filter_map` with `map` and `collect::<Result<Vec<_>, _>>()`.
+
+### Next small exercise
+Experiment with `Vec<Result<i32, &str>>` containing all `Ok` and one `Err`; collect into a single `Result<Vec<i32>, &str>` and explain what happens.
+
 # 2026-08-08 - First Focused Unit Test Approved
 
 ### Demonstrated successfully
