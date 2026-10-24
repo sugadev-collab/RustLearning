@@ -112,7 +112,7 @@ pub mod validate {
     use crate::messages::failed;
     use crate::messages::success;
     use crate::messages::warning;
-    use crate::quest::Status;
+    use super::Status;
     use crate::quest::string_to_note;
     use crate::quest::string_to_status;
 
