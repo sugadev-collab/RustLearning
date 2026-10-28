@@ -209,17 +209,17 @@ fn execute_command(command: Commands) {
 }
 
 fn main() {
-    let mut command = std::env::args();
+    // let mut command = std::env::args();
 
-    let identified_command = match command_identify(&mut command) {
-        Ok(command) => command,
-        Err(e) => {
-            println!("Error: {}", e);
-            return;
-        }
-    };
+    // let identified_command = match command_identify(&mut command) {
+    //     Ok(command) => command,
+    //     Err(e) => {
+    //         println!("Error: {}", e);
+    //         return;
+    //     }
+    // };
 
-    execute_command(identified_command);
+    // execute_command(identified_command);
 
     //====== Temprory call ========
     practice_module();
@@ -228,14 +228,25 @@ fn main() {
 use crate::quest::Status;
 //Temp
 fn practice_module() {
-    let quest = Quest::new(
-        String::from("This is reinforcement learning"),
-        1000000000_u32,
-        Some(String::from("I can do it")),
-        Status::Active,
-    );
+    let values: Vec<Result<i32, &str>> = vec![Ok(10_i32), Err("Bad XP"), Ok(30)];
 
-    let status = quest::status_to_string(quest.status());
-    println!("Quest title: {}", quest.title());
-    println!("Quest Status: {}", status)
+    let result_with_error: Result<Vec<i32>, &str> = values.into_iter().collect();
+
+    let values = vec![Ok(10_i32), Ok(20), Ok(30)];
+
+    let result_without_err: Result<Vec<i32>, &str> = values.into_iter().collect();
+
+    let with_error = match result_with_error {
+        Ok(value) => value.len().to_string(),
+        Err(msg) => msg.to_string(),
+    };
+    let without_error = match result_without_err {
+        Ok(value) => value.len().to_string(),
+        Err(msg) => msg.to_string(),
+    };
+
+    println!(
+        "with_error size: {} and without_error size: {}",
+        with_error, without_error
+    );
 }
