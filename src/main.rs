@@ -222,31 +222,19 @@ fn main() {
     // execute_command(identified_command);
 
     //====== Temprory call ========
-    practice_module();
+    println!("Result: {:?}", double_xp("bad"));
 }
 
-use crate::quest::Status;
+
 //Temp
-fn practice_module() {
-    let values: Vec<Result<i32, &str>> = vec![Ok(10_i32), Err("Bad XP"), Ok(30)];
 
-    let result_with_error: Result<Vec<i32>, &str> = values.into_iter().collect();
+fn parse_xp(text: &str) -> Result<u32, std::num::ParseIntError> {
+    let number = text.parse::<u32>()?;
 
-    let values = vec![Ok(10_i32), Ok(20), Ok(30)];
+    Ok(number)
+}
 
-    let result_without_err: Result<Vec<i32>, &str> = values.into_iter().collect();
-
-    let with_error = match result_with_error {
-        Ok(value) => value.len().to_string(),
-        Err(msg) => msg.to_string(),
-    };
-    let without_error = match result_without_err {
-        Ok(value) => value.len().to_string(),
-        Err(msg) => msg.to_string(),
-    };
-
-    println!(
-        "with_error size: {} and without_error size: {}",
-        with_error, without_error
-    );
+fn double_xp(text: &str) -> Result<u32, std::num::ParseIntError> {
+    let number = parse_xp(text)?;
+    Ok(number * 2)
 }
