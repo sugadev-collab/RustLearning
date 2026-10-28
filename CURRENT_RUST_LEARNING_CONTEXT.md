@@ -50,11 +50,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Propagating a `Result` through two function layers using `?`, rather than only parsing inside one function.
+Stateful command-line argument iteration: `Args::next()` and `Args::nth(n)` consume items from the iterator, so repeated `nth` calls do not index from the beginning. Apply to the actual `command_identify` bug.
 
 ## Next Small Exercise
 
-In a separate practice function `fn double_xp(text: &str) -> Result<u32, std::num::ParseIntError>`, call the learner's `parse_xp(text)?`, double the successful number, and return `Ok(...)`. Try "100" and "bad"; explain whether the second line runs on error. Use small numbers to avoid overflow distractions.
+Without changing the Quest Tracker CLI yet, predict and then run the results of calling `next()` and `nth(1)` on a small `Vec` iterator. Explain why `command_identify` currently skips the quest number after reading `start`, and propose the smallest fix.
 
 ## Roadmap Notes
 
