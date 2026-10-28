@@ -1,5 +1,25 @@
 # Learning Progress
 
+# 2026-10-28 - Basic Question-Mark Error Propagation Approved
+
+### Demonstrated successfully
+- Implemented `fn parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` with `let number = text.parse::<u32>()?; Ok(number)`.
+- Correctly placed `?` on a fallible parse, then wrapped the success value in `Ok`.
+- Reviewed from the pasted function; tests/compilation not independently run.
+
+### Still practicing
+- Reinforce `?` across multiple helper functions, then apply it to safe project loading and validation.
+- Remember `?` returns early from the enclosing `Result`-returning function on errors; it does not log or suppress them.
+
+### Review result
+Approved focused `?` usage; entire Quest Tracker remains under development.
+
+### Next concept
+Propagate errors across helper-function boundaries.
+
+### Next small exercise
+Implement `double_xp(text: &str) -> Result<u32, std::num::ParseIntError>` by calling `parse_xp(text)?`, multiplying the successful value by 2, and wrapping it in `Ok`. Test "100" and "bad".
+
 # 2026-10-28 - Result Collection And Type Inference Reinforcement
 
 ### Demonstrated successfully
