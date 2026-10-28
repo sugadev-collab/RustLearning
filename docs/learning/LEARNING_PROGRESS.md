@@ -1,5 +1,26 @@
 # Learning Progress
 
+# 2026-10-28 - Result Collection And Type Inference Reinforcement
+
+### Demonstrated successfully
+- Wrote a practice function collecting `Vec<Result<i32, &str>>` into `Result<Vec<i32>, &str>` and comparing error and all-success cases.
+- Used `match` to handle the collected `Ok` and `Err` results.
+- Explained that Rust uses static types and infers generic types from known element types. Clarified compile-time type knowledge versus runtime value knowledge and that a string literal has `&'static str` type.
+- The exercise was reviewed from pasted source; no compiler or runtime verification was performed by the tutor.
+
+### Still practicing
+- Apply `Result` error flow to real helpers. Contrast preserving errors with log-and-skip read-only decisions and ensure mutable commands do not rewrite a partial load.
+- New concept is `?` for early error propagation, returning the success value for use on the next line.
+
+### Review result
+Approved the focused `Result` collection and type-inference exercise, not the entire CLI project.
+
+### Next concept
+The `?` operator with `Result` error propagation.
+
+### Next small exercise
+Implement `parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` using `?` and test inputs "100" and "bad".
+
 # 2026-10-24 - Modules And Implicit Return Reinforcement Approved
 
 ### Demonstrated successfully
