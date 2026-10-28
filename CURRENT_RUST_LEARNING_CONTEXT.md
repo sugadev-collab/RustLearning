@@ -28,6 +28,7 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - 2026-10-24: learner independently practiced `Quest::new`, status getter, module paths, and fixed the `list() -> Option<Vec<Quest>>` implicit-return bug (source commit `7e2a6da`). This approves the specific return fix, not the entire tracker.
 - 2026-10-27: learner wrote a standalone practice function collecting `Vec<Result<i32, &str>>` into `Result<Vec<i32>, &str>`, comparing an error case with all-success case, and used `match` to display the results. Exercise approved from pasted code; Cargo execution not independently verified.
 - 2026-10-28: learner accurately explained static typing, literal integer defaults and string literals in type inference. Clarified that types, not runtime values, must be known at compile time; `10_i32` explicitly fixes the integer type; string literals have `&'static str`.
+- 2026-10-28: learner independently implemented `parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` using `let number = text.parse::<u32>()?; Ok(number)`. Implementation reviewed and approved from pasted snippet; no local execution verified.
 - No source-code edits were made by the tutor.
 
 ## Active Weak Spots
@@ -49,11 +50,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-`?` for `Result` error propagation: contrast explicit `match` with early-return on `Err` and unwrapped success value on `Ok`.
+Propagating a `Result` through two function layers using `?`, rather than only parsing inside one function.
 
 ## Next Small Exercise
 
-Write a small `parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` helper using `?`, then call it with "100" and "bad". Explain how `?` handles success and failure. The function is a temporary practice exercise, not a replacement for Quest Tracker validation.
+In a separate practice function `fn double_xp(text: &str) -> Result<u32, std::num::ParseIntError>`, call the learner's `parse_xp(text)?`, double the successful number, and return `Ok(...)`. Try "100" and "bad"; explain whether the second line runs on error. Use small numbers to avoid overflow distractions.
 
 ## Roadmap Notes
 
