@@ -23,12 +23,12 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - Prefer durable understanding over rushing toward a fixed deadline.
 - Small Git commits are allowed when useful; never stage generated build artifacts.
 
-## Latest Approved Exercise - 2026-10-24
+## Latest Approved Exercises - 2026-10-24 to 2026-10-28
 
-- The learner independently practiced a `Quest` constructor, `Status` enum, getter and sibling-module function from `main.rs`, and explained `mod`, `pub`, `use`, `crate::`, `super::`, method-call dot syntax and module/type paths.
-- The learner corrected the original `list() -> Option<Vec<Quest>>` implicit-return bug. Latest learner source commit checked: `7e2a6da` ("list fn defect fixed", 2026-10-24).
-- Explained final-expression/semicolon semantics and `filter_map`'s `Some` extraction. Demonstrated conceptual understanding; do not interpret this as full iterator mastery or full project approval.
-- The code was reviewed from GitHub; no local `cargo check`, tests, or runtime verification was performed by the tutor for this checkpoint.
+- 2026-10-24: learner independently practiced `Quest::new`, status getter, module paths, and fixed the `list() -> Option<Vec<Quest>>` implicit-return bug (source commit `7e2a6da`). This approves the specific return fix, not the entire tracker.
+- 2026-10-27: learner wrote a standalone practice function collecting `Vec<Result<i32, &str>>` into `Result<Vec<i32>, &str>`, comparing an error case with all-success case, and used `match` to display the results. Exercise approved from pasted code; Cargo execution not independently verified.
+- 2026-10-28: learner accurately explained static typing, literal integer defaults and string literals in type inference. Clarified that types, not runtime values, must be known at compile time; `10_i32` explicitly fixes the integer type; string literals have `&'static str`.
+- No source-code edits were made by the tutor.
 
 ## Active Weak Spots
 
@@ -49,11 +49,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Preserving and propagating `Result` errors while processing collections, especially `map` and `collect::<Result<Vec<_>, _>>()`; compare this with `filter_map` and deliberate log-and-skip read-only policies.
+`?` for `Result` error propagation: contrast explicit `match` with early-return on `Err` and unwrapped success value on `Ok`.
 
 ## Next Small Exercise
 
-In a small isolated practice function (not a Quest Tracker rewrite), collect `Vec<Result<i32, &str>>` using `.into_iter().collect::<Result<Vec<i32>, &str>>()`; compare inputs with all `Ok` versus one `Err`. Explain why a mutating command needs a reliable loading result.
+Write a small `parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` helper using `?`, then call it with "100" and "bad". Explain how `?` handles success and failure. The function is a temporary practice exercise, not a replacement for Quest Tracker validation.
 
 ## Roadmap Notes
 
