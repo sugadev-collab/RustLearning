@@ -1,5 +1,25 @@
 # Learning Progress
 
+# 2026-10-28 - Cross-Function Result Propagation Approved
+
+### Demonstrated successfully
+- Implemented `double_xp(text: &str) -> Result<u32, std::num::ParseIntError>` by calling `parse_xp(text)?` and returning `Ok(number * 2)`.
+- In `main`, used `println!("Result: {:?}", double_xp("bad"))` to inspect the error. The snippet correctly propagates parse failure from `parse_xp` to `double_xp`, skipping multiplication on error.
+
+### Still practicing
+- Reuse `?` in actual Quest Tracker operations and reason through error ownership, logging, and persistence safety.
+- Numeric multiplication can overflow for very large `u32` values; defer checked arithmetic until needed.
+- The sample was reviewed from pasted code and not independently compiled or executed.
+
+### Review result
+Approved this focused `?` exercise, not the complete Quest Tracker.
+
+### Next concept
+Stateful iterators: `Iterator::next` versus `Iterator::nth`, especially on `std::env::Args`.
+
+### Next small exercise
+Predict and run successive `next()`/`nth(1)` calls on a three-item vector iterator, then identify why the real `command_identify` function skips a command argument.
+
 # 2026-10-28 - Basic Question-Mark Error Propagation Approved
 
 ### Demonstrated successfully
