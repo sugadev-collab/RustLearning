@@ -39,25 +39,19 @@ fn command_identify(arg: &mut Args) -> Result<Commands, String> {
             None => Err("After 'complete' command a quest no is expected.".to_string()),
         };
     } else if command.starts_with("add") {
-        let tokens: Vec<String> = arg
-            .into_iter()
-            .enumerate()
-            .map(|(i, token)| if i != 0 && i != 1 { Some(token) } else { None })
-            .filter(|token_op| !token_op.is_none())
-            .map(|token_op| token_op.unwrap_or_default())
-            .collect();
+        let tokens: Vec<String> = arg.into_iter().collect();
 
-        let title = match tokens.get(1) {
+        let title = match tokens.get(0) {
             Some(title) => title,
             None => return Err("The add comment require 'title', 'xp' ".to_string()),
         };
 
-        let xp = match tokens.get(2) {
+        let xp = match tokens.get(1) {
             Some(xp) => xp,
             None => return Err("The add comment require 'xp' ".to_string()),
         };
 
-        let note = match tokens.get(3) {
+        let note = match tokens.get(2) {
             Some(note) => note,
             None => "",
         };
