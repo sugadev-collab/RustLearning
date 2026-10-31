@@ -1,5 +1,25 @@
 # Learning Progress
 
+# 2026-10-31 - Iterator Positioning Checkpoint
+
+### Demonstrated successfully
+- Read the standard-library explanation of `Iterator::nth` and experimented with repeated calls on a vector iterator.
+- Correctly predicted that `nth(1)`, `nth(1)`, `next()` over `[10, 20, 30, 40, 50]` produces `Some(20)`, `Some(40)`, `Some(50)`.
+- Explained that `nth` advances the current iterator rather than indexing the original collection on every call.
+
+### Still practicing
+- Apply this concept to the `command_identify` CLI parsing bug. The user's earlier observation that `nth(2)` returned `None` after a prior `nth(1)` was due to insufficient elements remaining, not single-use iterators.
+- Do not count the Quest Tracker parser as fixed until code and representative command output have been reviewed.
+
+### Review result
+Approved conceptual iterator positioning checkpoint; no source edits by tutor.
+
+### Next concept
+Using `Args::next()` for sequential command-line argument parsing.
+
+### Next small exercise
+Fix only the Start command's argument retrieval in `command_identify` and test `cargo run -- start 1`, allowing unrelated file I/O errors to remain for later lessons.
+
 # 2026-10-28 - Cross-Function Result Propagation Approved
 
 ### Demonstrated successfully
