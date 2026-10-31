@@ -32,13 +32,14 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - 2026-10-31: learner predicted correctly that successive `nth(1)`, `nth(1)`, `next()` calls on a five-item iterator yield 20, 40, 50, and explored why repeated `nth` calls advance the same iterator. Conceptual exercise approved; still needs to implement the actual CLI parser fix.
 - 2026-10-31: approved the actual Start command parser fix in source commit `a52f1d`: changed `arg.nth(2)` to `arg.next()`, re-enabled normal command dispatch, and removed the temporary iterator exercise. Verified via GitHub diff; Cargo not run in reviewer environment.
 - 2026-10-31: approved the `Complete` command's `arg.nth(2)` → `arg.next()` change in source commit `f93ad50`; verified the exact GitHub diff, not the runtime. Both `Start` and `Complete` now retrieve the immediate next arg; actual quest operations still need file/data fixes.
+- 2026-10-31: learner supplied a corrected local Add parser snippet, collecting remaining `Args` directly and using zero-based `.get(0)`, `.get(1)`, `.get(2)`. Parsing logic reviewed as correct assuming existing final `Commands::Add` construction; not pushed or compiler-tested at time of review.
 - No source-code edits were made by the tutor.
 
 ## Active Weak Spots
 
 - Current `list()` prints validation/parse errors then drops malformed records through `filter_map`; if `start`/`complete` later writes the reduced vector, it can erase stored records. User prefers reporting bad entries and continuing when safe; agree on a safe write policy before changing project behavior. Version 1 requirements currently mandate line-aware errors and no destructive invalid writes.
 - `Result` vs `Option`, converting via `.ok()`, and collecting `Result<Vec<_>, E>` need deliberate practice.
-- Other project bugs remain (absolute read vs relative write paths; `Add` argument parsing skips/misindexes values; `Add` overwrites earlier quests).
+- Other project bugs remain (absolute read vs relative write paths; `Add` argument parsing was corrected locally but is not yet compiler-verified or committed; `Add` execution still overwrites earlier quests).
 
 - Iterator chains and their item/reference types need reinforcement, especially `map`, `filter`, and `collect`.
 - `Option`, `Result`, and `?` are understood at an introductory level but need more independent repetition.
@@ -53,11 +54,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Collecting only the remaining command-line arguments with `Iterator::collect::<Vec<String>>()` and indexing safely via `.get(0)`, `.get(1)`, `.get(2)`; understand that `enumerate()` starts from the current iterator position, not the original process argv.
+Separate command parsing from command execution, especially when an executor can overwrite persisted data. Validate corrected Add argument parsing without invoking the unsafe Add storage write.
 
 ## Next Small Exercise
 
-Fix only the `command_identify` Add branch: once the command has been consumed, collect the remaining arguments, require title and XP, and treat the note as optional. Validate by temporarily printing the parsed `Commands::Add` fields or a small isolated parsing example—do not execute `add` against real data because the current Add execution overwrites prior stored quests. Share the changed parser and safe test output before committing.
+Run `cargo check` with the locally corrected Add parser and share any errors. To verify argument order safely, construct or print the parsed `Commands::Add` fields without calling `execute_command`'s Add branch or altering existing quests. After that, address the data-preservation defect in Add execution.
 
 ## Roadmap Notes
 
