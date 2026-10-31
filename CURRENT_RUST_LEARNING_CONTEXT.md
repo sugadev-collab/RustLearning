@@ -30,13 +30,14 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - 2026-10-28: learner accurately explained static typing, literal integer defaults and string literals in type inference. Clarified that types, not runtime values, must be known at compile time; `10_i32` explicitly fixes the integer type; string literals have `&'static str`.
 - 2026-10-28: learner independently implemented `parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` using `let number = text.parse::<u32>()?; Ok(number)`. Implementation reviewed and approved from pasted snippet; no local execution verified.
 - 2026-10-31: learner predicted correctly that successive `nth(1)`, `nth(1)`, `next()` calls on a five-item iterator yield 20, 40, 50, and explored why repeated `nth` calls advance the same iterator. Conceptual exercise approved; still needs to implement the actual CLI parser fix.
+- 2026-10-31: approved the actual Start command parser fix in source commit `a52f1d`: changed `arg.nth(2)` to `arg.next()`, re-enabled normal command dispatch, and removed the temporary iterator exercise. Verified via GitHub diff; Cargo not run in reviewer environment.
 - No source-code edits were made by the tutor.
 
 ## Active Weak Spots
 
 - Current `list()` prints validation/parse errors then drops malformed records through `filter_map`; if `start`/`complete` later writes the reduced vector, it can erase stored records. User prefers reporting bad entries and continuing when safe; agree on a safe write policy before changing project behavior. Version 1 requirements currently mandate line-aware errors and no destructive invalid writes.
 - `Result` vs `Option`, converting via `.ok()`, and collecting `Result<Vec<_>, E>` need deliberate practice.
-- Other project bugs remain outside the approved return-value fix (absolute read vs relative write paths; argument iteration; add command replacing the file).
+- Other project bugs remain (absolute read vs relative write paths; `Complete` still uses `nth(2)`; `Add` argument parsing skips/misindexes values; `Add` overwrites earlier quests).
 
 - Iterator chains and their item/reference types need reinforcement, especially `map`, `filter`, and `collect`.
 - `Option`, `Result`, and `?` are understood at an introductory level but need more independent repetition.
@@ -51,11 +52,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Apply stateful iterator consumption to the real `command_identify` function: use `next()` after reading a command to retrieve its immediate next argument rather than calling `nth(2)`. Understand how to verify argument parsing separately from the still-broken file loading.
+Reinforce sequential argument retrieval with `Iterator::next()` in the real CLI. The `Start` branch is corrected; the `Complete` branch still makes the same old mistake.
 
 ## Next Small Exercise
 
-Edit only the `Commands::Start` parsing branch in `command_identify`: replace the mistaken skip-ahead retrieval with the immediately next argument. Re-enable normal CLI dispatch for testing (retain practice code for later). Run `cargo check` and `cargo run -- start 1`; a separate file path/data issue may still prevent the operation, so verify specifically that parsing no longer complains that the quest number is missing. Share changed lines/output before further edits.
+Update only the `Complete` command's `arg.nth(2)` to retrieve the next remaining argument, then run `cargo check` and `cargo run -- complete 1`. It is fine if later file loading fails due to the separate path problem; verify argument parsing reached the command handler. Paste changed lines and output before committing.
 
 ## Roadmap Notes
 
