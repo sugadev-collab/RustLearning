@@ -25,7 +25,7 @@ fn command_identify(arg: &mut Args) -> Result<Commands, String> {
     } else if "summary".eq(&command) {
         return Ok(Commands::Summary);
     } else if command.starts_with("start") {
-        let st = arg.nth(2);
+        let st = arg.next();
 
         return match st {
             Some(quest_no) => Ok(Commands::Start(quest_no.to_string())),
@@ -209,27 +209,17 @@ fn execute_command(command: Commands) {
 }
 
 fn main() {
-    // let mut command = std::env::args();
+    let mut command = std::env::args();
 
-    // let identified_command = match command_identify(&mut command) {
-    //     Ok(command) => command,
-    //     Err(e) => {
-    //         println!("Error: {}", e);
-    //         return;
-    //     }
-    // };
+    let identified_command = match command_identify(&mut command) {
+        Ok(command) => command,
+        Err(e) => {
+            println!("Error: {}", e);
+            return;
+        }
+    };
 
-    // execute_command(identified_command);
+    execute_command(identified_command);
 
-    //====== Temprory call ========
-    practice();
-}
-
-//Temp
-
-fn practice() {
-    let mut args = vec!["app", "start", "1", "LOL"].into_iter();
-
-    println!("{:?}", args.nth(1)); // "app" consumed and "start" is returned and consumed
-    println!("{:?}", args.nth(2)); //here the "1" will be in 0 index sp the second index is "None" args.next() do the same consuming job but this is more like reading on 0 index
+    // ====== Temprory call ========
 }
