@@ -1,5 +1,27 @@
 # Learning Progress
 
+# 2026-10-31 - Safe Add Persistence Design Approved
+
+### Demonstrated successfully
+- Correctly identified that the Add command must load existing valid quests and append the new quest before saving, rather than replacing the database with `vec![quest]`.
+- Correctly identified that a missing database is an empty collection and a malformed saved quest must prevent any write.
+- Clarified that `std::fs::read_to_string` can distinguish missing files through `std::io::ErrorKind::NotFound`; a separate existence precheck is not required. Other I/O errors must not be treated as empty data.
+- No source changes; approval covers design reasoning only.
+
+### Still practicing
+- Implement safe read-modify-write without accidentally persisting only the valid subset after `filter_map` skips corrupt records; read-only logging and mutating-command failure can have different policies.
+- Fix the existing absolute-vs-relative path discrepancy (`list()` currently reads `/data/quests.db`, while writing uses `data/quests.db`), then add explicit missing-file support.
+- Existing Add command can overwrite quest data; do not invoke it against real saved data.
+
+### Review result
+Approved the three-case persistence reasoning, not the implementation.
+
+### Next concept
+Relative vs absolute file paths, then `io::ErrorKind::NotFound`.
+
+### Next small exercise
+Fix only the `list()` read path to `data/quests.db`; run `cargo check` and read-only `cargo run -- list`, then share the output. Do not test mutating commands yet.
+
 # 2026-10-31 - Add Argument Parser Verified And Approved
 
 ### Demonstrated successfully
