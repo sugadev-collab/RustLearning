@@ -222,19 +222,14 @@ fn main() {
     // execute_command(identified_command);
 
     //====== Temprory call ========
-    println!("Result: {:?}", double_xp("bad"));
+    practice();
 }
-
 
 //Temp
 
-fn parse_xp(text: &str) -> Result<u32, std::num::ParseIntError> {
-    let number = text.parse::<u32>()?;
+fn practice() {
+    let mut args = vec!["app", "start", "1", "LOL"].into_iter();
 
-    Ok(number)
-}
-
-fn double_xp(text: &str) -> Result<u32, std::num::ParseIntError> {
-    let number = parse_xp(text)?;
-    Ok(number * 2)
+    println!("{:?}", args.nth(1)); // "app" consumed and "start" is returned and consumed
+    println!("{:?}", args.nth(2)); //here the "1" will be in 0 index sp the second index is "None" args.next() do the same consuming job but this is more like reading on 0 index
 }
