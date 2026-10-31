@@ -34,6 +34,7 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - 2026-10-31: approved the `Complete` command's `arg.nth(2)` → `arg.next()` change in source commit `f93ad50`; verified the exact GitHub diff, not the runtime. Both `Start` and `Complete` now retrieve the immediate next arg; actual quest operations still need file/data fixes.
 - 2026-10-31: learner supplied a corrected local Add parser snippet, collecting remaining `Args` directly and using zero-based `.get(0)`, `.get(1)`, `.get(2)`. Parsing logic reviewed as correct assuming existing final `Commands::Add` construction; not pushed or compiler-tested at time of review.
 - 2026-10-31: learner pushed Add parser change in commit `cf06c5f`; reviewer verified full `Commands::Add` construction and zero-based indices. Learner supplied successful local `cargo check` output. Parser exercise approved; command execution not tested, and Add persistence remains unsafe.
+- 2026-10-31: learner correctly reasoned through safe Add persistence: preserve and append to existing valid quests; missing file means empty initial collection; corrupted file means report error and never write partial data. Approved design reasoning; no implementation approved yet.
 - No source-code edits were made by the tutor.
 
 ## Active Weak Spots
@@ -55,11 +56,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Safely updating persisted collections: read existing quests, append the new valid quest, and write back all quests; never write a partial collection when loading reports errors.
+File path semantics: a relative `data/quests.db` is different from absolute `/data/quests.db`. Make reading and writing use the same canonical project-relative path before adding missing-file handling. Thereafter, distinguish `io::ErrorKind::NotFound` (empty collection) from other I/O failures and from malformed stored record errors.
 
 ## Next Small Exercise
 
-Inspect the existing `Commands::Add` branch and write in plain words or pseudocode the safe read-modify-write flow. Name the point where an invalid/corrupt existing record or file I/O error must prevent writing. Do not run the existing Add executor on real data. Follow up by fixing the read-path mismatch and missing-file/error handling before implementing and testing persistence.
+Change only `list()`'s `let path = "/data/quests.db";` to `let path = "data/quests.db";`, matching the existing write path. Run `cargo check` and the read-only `cargo run -- list` command, and share the output. Do not execute Add, Start, or Complete against real quest data yet; after the path step, teach `ErrorKind::NotFound` without confusing it with other errors.
 
 ## Roadmap Notes
 
