@@ -32,7 +32,7 @@ fn command_identify(arg: &mut Args) -> Result<Commands, String> {
             None => Err("After 'start' command a quest no is expected.".to_string()),
         };
     } else if command.starts_with("complete") {
-        let st = arg.nth(2);
+        let st = arg.next();
 
         return match st {
             Some(quest_no) => Ok(Commands::Complete(quest_no.to_string())),
