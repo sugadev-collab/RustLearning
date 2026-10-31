@@ -1,5 +1,24 @@
 # Learning Progress
 
+# 2026-10-31 - Complete Command Argument Parsing Fix Approved
+
+### Demonstrated successfully
+- Reviewed committed change `f93ad50` in `src/main.rs`: changed the `Complete` branch from `arg.nth(2)` to `arg.next()`, correctly retrieving the next argument after the command name has been consumed.
+- Both `Start` and `Complete` parser branches now use immediate next-item retrieval.
+
+### Still practicing
+- Actual CLI execution was not run by the tutor; parsing correctness does not guarantee successful loading or status transitions.
+- `Add` still uses `enumerate()` after the executable and command have already been consumed, discarding title and XP. Its command executor currently overwrites stored quests with a one-item vector, so do not run it against real data yet.
+
+### Review result
+Approved the focused Complete parser correction, not the entire Quest Tracker.
+
+### Next concept
+Collecting remaining iterator values into a vector and using zero-based `get()` for required and optional arguments.
+
+### Next small exercise
+Rewrite only `command_identify`'s Add argument extraction to accept title, XP, and optional note from the remaining iterator. Demonstrate the parsed values without invoking the data-overwriting Add executor.
+
 # 2026-10-31 - Start Command Argument Parsing Fix Approved
 
 ### Demonstrated successfully
