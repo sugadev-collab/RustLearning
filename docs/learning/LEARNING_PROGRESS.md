@@ -1,5 +1,26 @@
 # Learning Progress
 
+# 2026-10-31 - Add Command Argument Indexing Reviewed
+
+### Demonstrated successfully
+- Replaced the incorrect `enumerate`/`map`/`filter` pipeline on an already-advanced `Args` iterator with `arg.into_iter().collect::<Vec<String>>()`.
+- Correctly indexed the new collected vector from zero: `get(0)` title, `get(1)` XP, and `get(2)` optional note.
+- Understood the earlier indexing confusion: consumed program and command arguments no longer appear in the collected vector.
+
+### Still practicing
+- This was reviewed from a pasted partial code snippet only, not yet committed or compiler-verified. The final `Commands::Add` construction was not pasted but was present in earlier GitHub source.
+- The current Add executor rewrites the data file with only the newly created quest. Avoid executing it against real saved data until persistence is fixed.
+- Separate parser correctness from safe execution; subsequent data-path and malformed-record handling remain pending.
+
+### Review result
+Approved the corrected argument extraction logic conditionally on intact final command construction and a successful `cargo check`; full Add command behavior remains unapproved.
+
+### Next concept
+Separating parsing from side-effecting execution and preventing data loss.
+
+### Next small exercise
+Run `cargo check` and verify parsed argument order without calling the Add executor, then return with results for review.
+
 # 2026-10-31 - Complete Command Argument Parsing Fix Approved
 
 ### Demonstrated successfully
