@@ -23,12 +23,13 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 - Prefer durable understanding over rushing toward a fixed deadline.
 - Small Git commits are allowed when useful; never stage generated build artifacts.
 
-## Latest Approved Exercises - 2026-10-24 to 2026-10-28
+## Latest Approved Exercises - 2026-10-24 to 2026-10-31
 
 - 2026-10-24: learner independently practiced `Quest::new`, status getter, module paths, and fixed the `list() -> Option<Vec<Quest>>` implicit-return bug (source commit `7e2a6da`). This approves the specific return fix, not the entire tracker.
 - 2026-10-27: learner wrote a standalone practice function collecting `Vec<Result<i32, &str>>` into `Result<Vec<i32>, &str>`, comparing an error case with all-success case, and used `match` to display the results. Exercise approved from pasted code; Cargo execution not independently verified.
 - 2026-10-28: learner accurately explained static typing, literal integer defaults and string literals in type inference. Clarified that types, not runtime values, must be known at compile time; `10_i32` explicitly fixes the integer type; string literals have `&'static str`.
 - 2026-10-28: learner independently implemented `parse_xp(text: &str) -> Result<u32, std::num::ParseIntError>` using `let number = text.parse::<u32>()?; Ok(number)`. Implementation reviewed and approved from pasted snippet; no local execution verified.
+- 2026-10-31: learner predicted correctly that successive `nth(1)`, `nth(1)`, `next()` calls on a five-item iterator yield 20, 40, 50, and explored why repeated `nth` calls advance the same iterator. Conceptual exercise approved; still needs to implement the actual CLI parser fix.
 - No source-code edits were made by the tutor.
 
 ## Active Weak Spots
@@ -50,11 +51,11 @@ Read this file first at the start of a Rust review or lesson. It is intentionall
 
 ## Current Next Concept
 
-Stateful command-line argument iteration: `Args::next()` and `Args::nth(n)` consume items from the iterator, so repeated `nth` calls do not index from the beginning. Apply to the actual `command_identify` bug.
+Apply stateful iterator consumption to the real `command_identify` function: use `next()` after reading a command to retrieve its immediate next argument rather than calling `nth(2)`. Understand how to verify argument parsing separately from the still-broken file loading.
 
 ## Next Small Exercise
 
-Without changing the Quest Tracker CLI yet, predict and then run the results of calling `next()` and `nth(1)` on a small `Vec` iterator. Explain why `command_identify` currently skips the quest number after reading `start`, and propose the smallest fix.
+Edit only the `Commands::Start` parsing branch in `command_identify`: replace the mistaken skip-ahead retrieval with the immediately next argument. Re-enable normal CLI dispatch for testing (retain practice code for later). Run `cargo check` and `cargo run -- start 1`; a separate file path/data issue may still prevent the operation, so verify specifically that parsing no longer complains that the quest number is missing. Share changed lines/output before further edits.
 
 ## Roadmap Notes
 
